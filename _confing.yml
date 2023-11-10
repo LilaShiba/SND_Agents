@@ -1,0 +1,31 @@
+# Site settings
+title:  Ensemble Agents
+description: System Neural Diversity in Foundational Ensemble Agents
+
+# Build settings
+markdown: kramdown
+theme: minima
+
+# Minima theme settings
+minima:
+  skin: "dark" # Choose between "classic", "solarized", or "dark"
+  social_links:
+    github: https://github.com/LilaShiba/
+    linkedin: https://www.linkedin.com/in/shibawizard/
+
+
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list to override the default setting.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle
+  - vendor/cache
+  - vendor/gems
+  - vendor/ruby
+
+# Plugins (if any)
+plugins:
+  - jekyll-feed
+
