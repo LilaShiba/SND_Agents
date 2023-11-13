@@ -14,13 +14,19 @@ Don't trust me, here's what the agent says about itself
 
   <img src='images/self.png'>
  <br>
+  <br>
 
 In this world, foundational models had become a crucial part of our daily lives. Companies like Google, with its vast user base, relied on these models to power their search engines. With each passing day, the impact of foundational models on society grew more profound.\n\nHowever, as with any powerful tool, the deployment of foundational models came with both opportunities and risks. The creators of these models recognized that the responsibility lay not only in building them, but also in their careful curation and adaptation. They understood that the ultimate source of data for training foundational models was people, and it was crucial to consider the potential benefits and harms that could befall them.
  <br>
+  <br>
+
 Thoughtful data curation became an integral part of the responsible development of AI systems. The creators realized that the quality and nature of the foundation on which these models stood had to be understood and characterized. After all, poorly-constructed foundations could lead to disastrous consequences, while well-executed foundations could serve as a reliable bedrock for future applications.\n\nAs the next five years unfolded, the integration of foundational models into real-world deployments reached new heights. The impact on people became even more far-reaching. These models were no longer limited to language tasks; their scope expanded to encompass a multitude of applications. They became the backbone of various AI systems, shaping the way we interacted with technology on a daily basis.
  <br>
+  <br>
+
 However, the true nature of these foundational models remained a mystery. Researchers, foundation model providers, application developers, policymakers, and society at large grappled with the question of trustworthiness. It became a critical problem to address, as the consequences of relying on faulty foundations could have severe implications for individuals and communities.\n\nIn this evolving landscape, humans played a crucial role. They were not only the providers of data but also the recipients of the benefits and harms that emerged from the deployment of foundational models. It was their responsibility to ensure that these models were used ethically and responsibly.
  <br>
+  <br>
 
   <img src='images/agent.png'>
  <br>
@@ -34,27 +40,29 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
 <details>
   <summary>Utils Documentation</summary>
 
-1. **Agent Class** 🌟: The core of the framework, embodying a top-level AI agent.
-   - **Key Features** 🛠️:
+1. Agent Class 🌟: The core of the framework, embodying a top-level AI agent.
+ <br>
+
+   - Key Features 🛠️:
      - Initialization with name, path, type, and embedding parameters.
      - Integration of Encoder, DB, and NewCourse instances.
      - Functionalities for course creation, chat interactions, and instance management.
   <br>
 
-2. **ChatBot Module** 💬: Manages the agent's conversational abilities.
-   - **Functionality** 🗣️:
+2. ChatBot Module 💬: Manages the agent's conversational abilities.
+   - Functionality 🗣️:
      - Handles chat loading and interactions 🔄.
      - Seamlessly integrates with the Agent class .
   <br>
 
-3. **NewCourse Module** 📖: Facilitates new course creation and management.
-   - **Implementation** 🔧:
+3. NewCourse Module 📖: Facilitates new course creation and management.
+   - Implementation 🔧:
      - Enables course creation from documents .
      - Supports content updates and loading .
   <br>
 
-4. **Encoder Module** : Responsible for data encoding and processing.
-   - **Operations** 🧠:
+4. Encoder Module : Responsible for data encoding and processing.
+   - Operations 🧠:
      - Manages document encoding and vector databases 💾.
      - Handles embedding parameters .
   <br>
@@ -68,20 +76,20 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
   <summary>Nature, finds a way</summary>
     <br>
 
-1. **Clone the Repository** 🌠:
+1. Clone the Repository 🌠:
    `git clone https://github.com/LilaShiba/SND_Agents.git`
    - This will get you started with your own local copy of the project.
  <br>
 
-2. **Ensure Python Environment** 🐍:
+2. Ensure Python Environment 🐍:
    - Make sure Python >= 3.10 is installed on your machine.
      <br>
 
-3. **Install Dependencies** 🧬:
+3. Install Dependencies 🧬:
    - Run `pip install -r requirements.txt` to install necessary packages like numpy, openAI, etc, ensuring smooth operation of the framework.
      <br>
 
-4. **Initialize the Agent** 🤖:
+4. Initialize the Agent 🤖:
    - Execute the main script with `python main.py` to kickstart your AI agent's journey.
      <br>
 
@@ -129,4 +137,4 @@ test_pack = Pack(agent_specs, embedding_params)
 
 ## Synaptic Connections (2D representation of N feature)
 
-<img src='images/images/knn_example.png'>
+<img src='images/knn_example.png'>
