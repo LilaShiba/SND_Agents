@@ -21,7 +21,7 @@ class Pack:
         agent_specs (list): name, path, cot_type, new_bool
         embedding_params (list): llm, chunk, overlap, creativeness
         '''
-
+        self.edges = list()
         self.agents = []
         if not embedding_params:
             embedding_params = {
@@ -43,6 +43,22 @@ class Pack:
         self.embeddings = embedding_params
         # Create or load embeddings
         self.load_agent_docs()
+
+    def update_edges(self) -> dict:
+        '''
+        cycle through knn to add edges for K combinations
+        Within range x
+
+        '''
+        edges = defaultdict()
+
+        for idx, node in enumerate(self.agents):
+            delta_edges = self.knn.search(node.state, 3)
+            self.agents[idx].edges.append(delta_edges)
+            edges[node.name] = delta_edges
+
+        self.edges = edges
+        return edges
 
     def load_agent_docs(self):
         '''
@@ -110,42 +126,44 @@ class Pack:
             self.current_res = res
             # self.jaccard_similarity(res)
 
-    # def jaccard_similarity(self, res=None):
-    #     '''
-    #     Return all jaccard indices for a given prompt
-    #     '''
-    #     self.current_jaccard_indices = []
-    #     if not res:
-    #         res = self.current_res
-    #     # Step 1: Shingling
-    #     for agent in self.agents:
-    #             res[agent.name] = agent.chat_bot.one_question(prompt)
-    #     str_a = res['agent_cot']
-    #     str_b = res['agent_corpus']
-    #     str_c = res["agent_quant"]
+    def jaccard_similarity(self, res=None):
+        '''
+        Return all jaccard indices for a given prompt
+        '''
+        self.current_jaccard_indices = []
+        if not res:
+            res = self.current_res
+        # Step 1: Shingling
+        shing_strings = []
 
-    #     # k = min(len(str_a), len(str_b), len(str_c)) - 1]
-    #     k = self.agent_corpus.encoder.chunk_size
-    #     print(f'k: {k} and the string is {str_a}')
+        for agent in self.agents:
+            res[agent.name] = agent.chat_bot.one_question(prompt)
+            shing_strings.append(res[agent.name])
 
-    #     shingles_a = set([str_a[i:i+k] for i in range(len(str_a) - k + 1)])
-    #     shingles_b = set([str_b[i:i+k] for i in range(len(str_b) - k + 1)])
-    #     shingles_c = set([str_c[i:i+k] for i in range(len(str_c) - k + 1)])
-    #     shingles = [shingles_a, shingles_b, shingles_c]
-    #     combos = list(combinations(shingles, 2))
+        # k = min(len(str_a), len(str_b), len(str_c)) - 1]
+        # TODO: Make dynamic / implications of standard vs. dynamic :)
+        k = self.agents[0].encoder.chunk_size
+        shingles = []
+        for shingle in shing_strings:
+            delta_shingle = set([shingle[i:i+k]
+                                for i in range(len(shingle) - k + 1)])
 
-    #     for combo in combos:
-    #         a, b = combo
-    #         # Step 2: Intersection and Union
-    #         intersection_a_b = a.intersection(b)
-    #         union_a_b = a.union(b)
-    #         # Step 3: Jaccard Index Calculation
-    #         jaccard_index_a_b = len(intersection_a_b) / len(union_a_b)
-    #         self.current_jaccard_indices.append(
-    #             ((jaccard_index_a_b))
-    #         )
-    #     print(self.current_jaccard_indices)
-    #     return self.current_jaccard_indices
+            shingles.append(delta_shingle)
+
+        combos = list(combinations(shingles, 2))
+
+        for combo in combos:
+            a, b = combo
+            # Step 2: Intersection and Union
+            intersection_a_b = a.intersection(b)
+            union_a_b = a.union(b)
+            # Step 3: Jaccard Index Calculation
+            jaccard_index_a_b = len(intersection_a_b) / len(union_a_b)
+            self.current_jaccard_indices.append(
+                ((jaccard_index_a_b))
+            )
+        print(self.current_jaccard_indices)
+        return self.current_jaccard_indices
 
 
 if __name__ == '__main__':
