@@ -44,37 +44,31 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
 
 1. Agent Class 🌟: The core of the framework, embodying a top-level AI agent.
  <br>
-
-   - Key Features 🛠️:
         <br>
      - Initialization with name, path, type, and embedding parameters.
           <br>
      - Integration of Encoder, DB, and NewCourse instances.
           <br>
      - Functionalities for course creation, chat interactions, and instance management.
+<br>
   <br>
-
 2. ChatBot Module 💬: Manages the agent's conversational abilities.
       <br>
-   - Functionality 🗣️:
-     <br>
      - Handles chat loading and interactions 🔄.
           <br>
      - Seamlessly integrates with the Agent class .
+<br>
   <br>
-
-4. NewCourse Module 📖: Facilitates new course creation and management.
+3. NewCourse Module 📖: Facilitates new course creation and management.
       <br>
-   - Implementation 🔧:
         <br>
      - Enables course creation from documents .
           <br>
      - Supports content updates and loading .
+<br>
   <br>
-
 6. Encoder Module : Responsible for data encoding and processing.
       <br>
-   - Operations 🧠:
         <br>
      - Manages document encoding and vector databases 💾.
           <br>
@@ -92,24 +86,29 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
 
 1. Clone the Repository 🌠:
       <br>
-   `git clone https://github.com/LilaShiba/SND_Agents.git`
-   <br>
-   - This will get you started with your own local copy of the project.
+   <pre><code> git clone https://github.com/LilaShiba/SND_Agents.git/code>
  <br>
-
-3. Ensure Python Environment 🐍:
-      <br>
-   - Make sure Python >= 3.10 is installed on your machine.
-     <br>
-
-5. Install Dependencies 🧬:
-      <br>
-   - Run `pip install -r requirements.txt` to install necessary packages like numpy, openAI, etc, ensuring smooth operation of the framework.
-     <br>
-
-7. Initialize the Agent 🤖:
-      <br>
-   - Execute the main script with `python main.py` to kickstart your AI agent's journey.
+        <br>
+  - This will get you started with your own local copy of the project.
+ <br>
+  <br>
+2. Ensure Python Environment 🐍 >= 3.10:
+  <br>
+  <br>
+  3. Install Dependencies 🧬:
+ <br>
+  <br>   
+  - Run <pre><code> install -r requirements.txt/code></pre>pip 
+   <br>
+  <br>
+  
+  to install necessary packages like numpy, openAI, etc, ensuring smooth operation of the framework.
+ <br>
+  <br>
+3. Initialize the Agent 🤖:
+ <br>
+  <br>   
+  Execute the main script with <pre><code> python main.py/code></pre> to kickstart your AI agent's journey.
      <br>
 
 </details>
