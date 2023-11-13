@@ -43,7 +43,7 @@ class Knn:
 
         plt.figure()
         x_vals, y_vals = zip(*[obj.state for obj in self.objects])
-        plt.scatter(x_vals, y_vals, label='Objects')
+        plt.scatter(x_vals, y_vals, label='Agents')
 
         # Highlight the K nearest neighbors
         knn_x, knn_y = zip(*[obj.state for obj in nearest_neighbors])
