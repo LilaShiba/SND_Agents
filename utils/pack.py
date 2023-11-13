@@ -6,6 +6,8 @@ from itertools import combinations
 from collections import defaultdict
 import time
 from utils.knn import Knn
+import networkx as nx
+import matplotlib.pyplot as plt
 
 
 class Pack:
@@ -22,6 +24,7 @@ class Pack:
         embedding_params (list): llm, chunk, overlap, creativeness
         '''
         self.edges = list()
+        self.G = nx.Graph()
         self.agents = []
         if not embedding_params:
             embedding_params = {
@@ -52,13 +55,35 @@ class Pack:
         '''
         edges = defaultdict()
 
-        for idx, node in enumerate(self.agents):
+        for node in self.agents:
             delta_edges = self.knn.search(node.state, 3)
-            self.agents[idx].edges.append(delta_edges)
-            edges[node.name] = delta_edges
+            self.agents[node.name].edges.append(delta_edges)
 
         self.edges = edges
         return edges
+
+    def graph(self):
+        '''
+        creates networkX graph from self.edges
+        '''
+
+        for agent, connections in self.edges.items():
+            for connection in connections:
+                # Assuming each connection is a tuple representing another agent
+                self.G.add_edge(agent, str(connection))
+
+        # Now, draw the graph
+        plt.figure(figsize=(12, 8))  # Set the size of the plot
+        pos = nx.spring_layout(self.G)  # This is a layout for the nodes
+
+        # Draw the graph with labels
+        nx.draw(self.G, pos, with_labels=True, node_color='lightblue',
+                edge_color='gray', node_size=2000, font_size=10)
+
+        # Display the plot
+        plt.show()
+
+        return self.G
 
     def load_agent_docs(self):
         '''
@@ -126,7 +151,7 @@ class Pack:
             self.current_res = res
             # self.jaccard_similarity(res)
 
-    def jaccard_similarity(self, res=None):
+    def jaccard_similarity(self, prompt: str, res=None):
         '''
         Return all jaccard indices for a given prompt
         '''

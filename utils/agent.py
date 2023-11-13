@@ -106,7 +106,7 @@ class Agent:
 
         """
         print(f'waking up agent {self.name}')
-        print('⚫')
+        print('')
 
         self.chat_bot.set_agent()
 
@@ -121,8 +121,8 @@ class Agent:
          Add documents to vector db
          path: document path
         '''
-        print(f'🦄 adding {path} 🦄')
-        print('⚫')
+        print(f'🦄 adding {path} ')
+        print(' ')
         pages = self.course.from_pdf(path)
         docs = self.encoder.create_chunks(pages)
 
@@ -130,7 +130,7 @@ class Agent:
         self.vectordb.persist()
         # self.encoder.vectordb.add_documents(embeddings)
         print("memory updated")
-        print('⚫')
+        print(' ')
 
         # with open('output.log', 'r') as file:
         #     # Read the content of the file
