@@ -4,6 +4,7 @@ import numpy as np
 from utils.chatbot import ChatBot
 from utils.loader import NewCourse
 from utils.encoder import Encoder
+from utils.knn import Knn
 
 
 class Agent:
@@ -11,7 +12,7 @@ class Agent:
     Represents a top-level AI agent, composed of Encoder, DB, and NewCourse instances.
     """
 
-    def __init__(self, name: str, path: str, cot_type: int, embedding_params: List[Union[str, float, int]], new_course: bool = False):
+    def __init__(self, name: str, path: str, cot_type: int, embedding_params: List[Union[str, float, int]], old_course: bool = False):
         """
         Initializes an Agent object with a name, path, type, and embedding parameters.
 
@@ -20,15 +21,17 @@ class Agent:
             path (str): Document path.
             cot_type (int): Type of the agent.
             embedding_params (List[Union[str, float, int]]): List containing embedding parameters.
-            loat (bool): load course rather than create
+            old_course (bool): True to load a course False to create a course
         """
         self.name: str = name
         self.path: str = path
         self.cot_name: int = cot_type
         self.embedding_params: list = embedding_params
+        self.old_course = old_course
         # Pack Details
-        self.vector: list = list()
-        self.state: str = ''
+        self.edges: list = list()
+        # input, ouput : x,y for knn is dynamic. Add N Features for knn
+        self.state: list = [np.random.rand(), np.random.rand()]
         self.heading: float = np.random.rand() * 2 * np.pi
         # Subprocesses
         # creates self.docs
@@ -36,12 +39,12 @@ class Agent:
         print('')
         print('🧙 creating course  🧙')
         self.course: object = NewCourse(
-            name, path, embedding_params, new_course)
+            name, path, embedding_params, old_course)
         print('')
         print('🔮 creating encoder  🔮 ')
         # creates self.vectordb
 
-        self.encoder: object = Encoder(self.course, new_course)
+        self.encoder: object = Encoder(self.course, old_course)
         print('')
         print('🧚 creating chat_bot for  🧚')
         self.chat_bot: object = ChatBot(self)
@@ -49,6 +52,15 @@ class Agent:
         print(f'the path  🌈 being used for {self.name} is {path}')
         print('')
         self.vectordb: object = self.encoder.vectordb
+
+    def add_edge(self, node: Any) -> None:
+        """
+        Add an edge to the object.
+
+        Args:
+            node (Any): The node to connect with.
+        """
+        self.edges.append(node)
 
     def new_course(self):
         """

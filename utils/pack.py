@@ -5,6 +5,7 @@ import logging
 from itertools import combinations
 from collections import defaultdict
 import time
+from utils.knn import Knn
 
 
 class Pack:
@@ -20,6 +21,7 @@ class Pack:
         agent_specs (list): name, path, cot_type, new_bool
         embedding_params (list): llm, chunk, overlap, creativeness
         '''
+
         self.agents = []
         if not embedding_params:
             embedding_params = {
@@ -31,8 +33,10 @@ class Pack:
         for idx, _ in enumerate(agent_specs):
             name, path, cot_type, new_bool, = agent_specs[idx]
             self.agents.append(
-                [Agent(name, path, cot_type, embedding_params[idx], new_bool), path])
-        self.agent_names = [agent.name for agent, _ in self.agents]
+                Agent(name, path, cot_type, embedding_params[idx], new_bool))
+        self.agent_names = [agent.name for agent in self.agents]
+
+        self.knn = Knn(self.agents)
 
         self.current_res = None
         self.current_jaccard_indices = None
@@ -46,14 +50,13 @@ class Pack:
 
         '''
         idx = 0
-        for agent, db_path in self.agents:
+        for agent in self.agents:
             # New Instance
-            if db_path == 0:
+            if not agent.old_course:
                 agent.new_course()
 
             # Load VectorDB
             else:
-                agent.path = db_path
                 agent.load_course()
             idx += 1
 
