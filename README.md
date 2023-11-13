@@ -27,6 +27,8 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
 
 ## 🌈✨ Modules ✨🌈
 
+<details>
+  <summary>Utils Documentation</summary>
 1. **Agent Class** 🌟: The core of the framework, embodying a top-level AI agent.
    - **Key Features** 🛠️:
      - Initialization with name, path, type, and embedding parameters 🏳️‍⚧️.
@@ -48,20 +50,26 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
      - Manages document encoding and vector databases 💾.
      - Handles embedding parameters 🧬.
 
+</details>
+
 ## 🌈 Installation 🦋
 
+<details>
+
+  <summary>Nature, finds a way 🧬</summary>
 1. **Clone the Repository** 🌠:
    `git clone https://github.com/LilaShiba/SND_Agents.git`
    - This will get you started with your own local copy of the project.
 
 2. **Ensure Python Environment** 🐍:
-   - Make sure Python >= 3.10 is installed on your machine. Python is essential for running the framework.
-
+   - Make sure Python >= 3.10 is installed on your machine.
 3. **Install Dependencies** 🧬:
-   - Run `pip install -r requirements.txt` to install necessary packages like numpy, ensuring smooth operation of the framework.
+   - Run `pip install -r requirements.txt` to install necessary packages like numpy, openAI, etc, ensuring smooth operation of the framework.
 
 4. **Initialize the Agent** 🤖:
    - Execute the main script with `python main.py` to kickstart your AI agent's journey.
+
+</details>
 
 ## 🌈💻 Single Agent Example
 
