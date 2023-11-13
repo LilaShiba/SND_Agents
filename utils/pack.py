@@ -59,7 +59,7 @@ class Pack:
         for idx, node in enumerate(self.agents):
             delta_edges = self.knn.search(node.state, 3)
             self.agents[idx].edges.append([n.name for n in delta_edges])
-            edges[node.name] = delta_edges
+            edges[node.name] = [node.name for node in delta_edges]
 
         self.edges = edges
         return edges
