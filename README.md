@@ -63,7 +63,7 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
 4. **Initialize the Agent** 🤖:
    - Execute the main script with `python main.py` to kickstart your AI agent's journey.
 
-## 🌈💻 Code Example
+## 🌈💻 Single Agent Example
 
 ```python
 embedding_params = ["facebook-dpr-ctx_encoder-multiset-base", 200, 25, 0.7]
@@ -74,7 +74,7 @@ testAgent = Agent('agent_snd', db_path, 0, embedding_params, True)
 testAgent.start_chat()
 ```
 
-## 🐺🐺🐺 Creating a Pack
+## 🐺🐺🐺 Creating a Pack of Agents
 
 ```python
 # embedding paths
@@ -105,4 +105,4 @@ test_pack = Pack(agent_specs, embedding_params)
 
 ## Synaptic Connections (2D representation of N feature)
 
-<img src='knn_output.png'>
+<img src='images/knn_output.png'>
