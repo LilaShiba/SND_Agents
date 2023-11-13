@@ -26,6 +26,7 @@ class Pack:
         self.edges = list()
         self.G = nx.Graph()
         self.agents = []
+        self.agent_dict = defaultdict()
         if not embedding_params:
             embedding_params = {
                 1: ["facebook-dpr-ctx_encoder-multiset-base", 200, 25, 0.9],
@@ -40,7 +41,7 @@ class Pack:
         self.agent_names = [agent.name for agent in self.agents]
 
         self.knn = Knn(self.agents)
-
+        self.agent_dict = {agent.name: agent for agent in self.agents}
         self.current_res = None
         self.current_jaccard_indices = None
         self.embeddings = embedding_params
@@ -55,9 +56,10 @@ class Pack:
         '''
         edges = defaultdict()
 
-        for node in self.agents:
+        for idx, node in enumerate(self.agents):
             delta_edges = self.knn.search(node.state, 3)
-            self.agents[node.name].edges.append(delta_edges)
+            self.agents[idx].edges.append([n.name for n in delta_edges])
+            edges[node.name] = delta_edges
 
         self.edges = edges
         return edges
