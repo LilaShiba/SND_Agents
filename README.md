@@ -46,26 +46,38 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
  <br>
 
    - Key Features 🛠️:
+        <br>
      - Initialization with name, path, type, and embedding parameters.
+          <br>
      - Integration of Encoder, DB, and NewCourse instances.
+          <br>
      - Functionalities for course creation, chat interactions, and instance management.
   <br>
 
 2. ChatBot Module 💬: Manages the agent's conversational abilities.
+      <br>
    - Functionality 🗣️:
+     <br>
      - Handles chat loading and interactions 🔄.
+          <br>
      - Seamlessly integrates with the Agent class .
   <br>
 
-3. NewCourse Module 📖: Facilitates new course creation and management.
+4. NewCourse Module 📖: Facilitates new course creation and management.
+      <br>
    - Implementation 🔧:
+        <br>
      - Enables course creation from documents .
+          <br>
      - Supports content updates and loading .
   <br>
 
-4. Encoder Module : Responsible for data encoding and processing.
+6. Encoder Module : Responsible for data encoding and processing.
+      <br>
    - Operations 🧠:
+        <br>
      - Manages document encoding and vector databases 💾.
+          <br>
      - Handles embedding parameters .
   <br>
 
@@ -79,19 +91,24 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
     <br>
 
 1. Clone the Repository 🌠:
+      <br>
    `git clone https://github.com/LilaShiba/SND_Agents.git`
+   <br>
    - This will get you started with your own local copy of the project.
  <br>
 
-2. Ensure Python Environment 🐍:
+3. Ensure Python Environment 🐍:
+      <br>
    - Make sure Python >= 3.10 is installed on your machine.
      <br>
 
-3. Install Dependencies 🧬:
+5. Install Dependencies 🧬:
+      <br>
    - Run `pip install -r requirements.txt` to install necessary packages like numpy, openAI, etc, ensuring smooth operation of the framework.
      <br>
 
-4. Initialize the Agent 🤖:
+7. Initialize the Agent 🤖:
+      <br>
    - Execute the main script with `python main.py` to kickstart your AI agent's journey.
      <br>
 
