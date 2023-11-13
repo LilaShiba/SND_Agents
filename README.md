@@ -1,6 +1,6 @@
 # 🦄 About This Framework 🦄
 
-The AI Agent Framework is a cutting-edge system designed for crafting intelligent agents. These agents are not just typical AI entities; they are foundational, adaptable, and capable of underpinning a wide array of applications. 🌟 This framework recognizes the profound potential and responsibility inherent in AI development. The data fueling these models originates from diverse individuals, highlighting the need for considerate impact analysis and ethical AI practices. Emphasizing thoughtful data curation and responsible AI usage, this framework aspires to maximize the benefits of foundational models while minimizing potential harms.
+This AI Agent Framework is a cutting-edge system designed for crafting intelligent agent(s). These agent(s) are not just typical AI entities; they are foundational, adaptable, and capable of underpinning a wide array of applications. 🌟 This framework recognizes the profound potential and responsibility inherent in AI development. The data fueling these models originates from diverse individuals, highlighting the need for considerate impact analysis and ethical AI practices. Emphasizing thoughtful data curation and responsible AI usage, this framework aspires to maximize the benefits of foundational models while minimizing potential harms.
 
 ## 🚀 From the Agent
 
@@ -51,11 +51,11 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
 ## 🌈 Installation 🦋
 
 1. **Clone the Repository** 🌠:
-   `git clone [repository-url]`
+   `git clone https://github.com/LilaShiba/SND_Agents.git`
    - This will get you started with your own local copy of the project.
 
 2. **Ensure Python Environment** 🐍:
-   - Make sure Python 3.x is installed on your machine. Python is essential for running the framework.
+   - Make sure Python >= 3.10 is installed on your machine. Python is essential for running the framework.
 
 3. **Install Dependencies** 🧬:
    - Run `pip install -r requirements.txt` to install necessary packages like numpy, ensuring smooth operation of the framework.
@@ -73,3 +73,36 @@ db_path = 'chroma_db/agent_snd'
 testAgent = Agent('agent_snd', db_path, 0, embedding_params, True)
 testAgent.start_chat()
 ```
+
+## 🐺🐺🐺 Creating a Pack
+
+```python
+# embedding paths
+learning_to_act = "chroma_db/agent_ltoa"
+system_neural_diversity = "chroma_db/agent_snd"
+foundational_models = "chroma_db/agent_foundation"
+# llm settings 
+embedding_params = [
+    ["facebook-dpr-ctx_encoder-multiset-base", 200, 25, 0.9],
+    ["facebook-dpr-ctx_encoder-multiset-base", 200, 25, 0.1],
+    ["facebook-dpr-ctx_encoder-multiset-base", 200, 25, 0.5],
+    ["facebook-dpr-ctx_encoder-multiset-base", 200, 25, 0.9],
+    ["facebook-dpr-ctx_encoder-multiset-base", 200, 25, 0.1],
+    ["facebook-dpr-ctx_encoder-multiset-base", 200, 25, 0.5]
+]
+# name, path, cot_type, new_bool
+agent_specs = [
+    ['agent_ltoa', learning_to_act, 0, True],
+    ['agent_snd', system_neural_diversity, 0, True],
+    ['agent_foundation', foundational_models, 0, True],
+    ['agent_quant', 'documents/VisualizingQuantumCircuitProbability.pdf', 1, False],
+    ['agent_norbert', 'documents/Norman-CognitiveEngineering.pdf', 1, False]
+]
+
+test_pack = Pack(agent_specs, embedding_params)
+
+```
+
+## Synaptic Connections (2D representation of N feature)
+
+<img src='knn_output.png'>

@@ -82,7 +82,7 @@ class Pack:
         one question for pack
         '''
         res = defaultdict()
-        for agent, _ in self.agents:
+        for agent in self.agents:
             res[agent.name] = agent.chat_bot.one_question(prompt)
 
         return res
@@ -101,7 +101,7 @@ class Pack:
             if 'exit' in prompt:
                 exit_flag = True
 
-            for agent, _ in self.agents:
+            for agent in self.agents:
                 res[agent.name] = agent.chat_bot.one_question(prompt)
                 time.sleep(60)
             logging.info(res)
