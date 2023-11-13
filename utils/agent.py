@@ -1,9 +1,9 @@
 from typing import *
 import numpy as np
 
-from chatbot import ChatBot
-from loader import NewCourse
-from encoder import Encoder
+from utils.chatbot import ChatBot
+from utils.loader import NewCourse
+from utils.encoder import Encoder
 
 
 class Agent:
@@ -28,26 +28,27 @@ class Agent:
         self.embedding_params: list = embedding_params
         # Pack Details
         self.vector: list = list()
-        self.state: str = None
-        self.heading = np.random.rand() * 2 * np.pi
+        self.state: str = ''
+        self.heading: float = np.random.rand() * 2 * np.pi
         # Subprocesses
         # creates self.docs
         print('🔥  Conjuring up',  self.name,  ' 🔥 ')
-        print('⚫')
+        print('')
         print('🧙 creating course  🧙')
-        self.course = NewCourse(name, path, embedding_params, new_course)
-        print('⚫')
+        self.course: object = NewCourse(
+            name, path, embedding_params, new_course)
+        print('')
         print('🔮 creating encoder  🔮 ')
         # creates self.vectordb
 
-        self.encoder = Encoder(self.course, new_course)
-        print('⚫')
+        self.encoder: object = Encoder(self.course, new_course)
+        print('')
         print('🧚 creating chat_bot for  🧚')
-        self.chat_bot = ChatBot(self)
-        print('⚫')
+        self.chat_bot: object = ChatBot(self)
+        print('')
         print(f'the path  🌈 being used for {self.name} is {path}')
-        print('⚫')
-        self.vectordb = self.encoder.vectordb
+        print('')
+        self.vectordb: object = self.encoder.vectordb
 
     def new_course(self):
         """
@@ -135,6 +136,6 @@ if __name__ == "__main__":
     path = 'documents/meowsmeowing.pdf'
     db_path = 'chroma_db/agent_snd'
 
-    testAgent = Agent('agent_snd', db_path, 0, embedding_params, True)
+    testAgent = Agent('agent_snd', path, 0, embedding_params, True)
     # testAgent.add_memory("documents/LtoA.pdf")
     testAgent.start_chat()

@@ -140,12 +140,13 @@ class ChatBot:
         qa_chain = RetrievalQA.from_chain_type(
             self.llm, retriever=self.agent.encoder.vectordb.as_retriever())
 
-        if self.agent.cot_name == 1:
-            self.question = "step by step, and one by one explain: " + self.question
+        # if self.agent.cot_name == 1:
+        #     self.question = "step by step, and one by one explain: " + self.question
 
         response = qa_chain({"query": self.question})
         # print(f"{self.name}: {response}")
         logging.info(response['result'])
+        logging.debug(response['result'])
 
         return response['result']
 
