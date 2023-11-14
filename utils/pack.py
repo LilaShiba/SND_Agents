@@ -34,12 +34,13 @@ class Pack:
                 3: ["facebook-dpr-ctx_encoder-multiset-base", 200, 25, 0.1]
             }
 
+        # subprocess add agents
         for idx, _ in enumerate(agent_specs):
             name, path, cot_type, new_bool, = agent_specs[idx]
             self.agents.append(
                 Agent(name, path, cot_type, embedding_params[idx], new_bool))
         self.agent_names = [agent.name for agent in self.agents]
-
+        # init basic random network structure
         self.knn = Knn(self.agents)
         self.agent_dict = {agent.name: agent for agent in self.agents}
         self.current_res = None
@@ -127,6 +128,9 @@ class Pack:
         res = defaultdict()
         for agent in self.agents:
             res[agent.name] = agent.chat_bot.one_question(prompt)
+            time.sleep(60)
+        logging.info(res)
+        logging.debug(res)
 
         return res
 

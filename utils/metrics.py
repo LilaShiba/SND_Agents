@@ -3,6 +3,7 @@ import numpy as np
 from collections import Counter
 import logging
 from scipy.stats import wasserstein_distance
+import time
 
 
 class ThoughtDiversity:
@@ -43,6 +44,7 @@ class ThoughtDiversity:
 
         for _ in range(rounds):
             round_res = self.pack.one_question(question)
+            time.sleep(60)
             # Extract responses from individual agents
             responses = [round_res[agent_name]
                          for agent_name in self.pack.agent_names if agent_name in round_res]

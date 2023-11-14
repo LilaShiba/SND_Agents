@@ -134,7 +134,7 @@ class Agent:
 
         # with open('output.log', 'r') as file:
         #     # Read the content of the file
-        #     pages = self.course.from_txt('output.log')
+        #     pages = self.course.from_txt(res)
         #     docs = self.encoder.create_chunks(pages)
         #     self.chat_bot.add_fractual(docs)
 
