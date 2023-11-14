@@ -1,10 +1,10 @@
 # 🦄 About This Framework
 
-This AI Entity Framework is a cutting-edge system designed for crafting intelligent agent(s). These agent(s) are not just typical AI entities; they are foundational, adaptable, and capable of underpinning a wide array of applications. 🌟 This framework recognizes the profound potential and responsibility inherent in AI development. The data fueling these models originates from diverse individuals, highlighting the need for considerate impact analysis and ethical AI practices. Emphasizing thoughtful data curation and responsible AI usage, this framework aspires to maximize the benefits of foundational models while minimizing potential harms.
+This AI Entity Framework is a cutting-edge system designed for crafting intelligent agent(s). These agent(s) are not just typical AI entities; they are foundational, adaptable, and capable of underpinning a wide array of applications. 🌟 This framework recognizes the profound potential and responsibility inherent in AI development. Emphasizing thoughtful data curation and responsible AI usage, this framework aspires to maximize the benefits of foundational models while minimizing potential harms.
 
 ### A network of agents 🧙🧙🧙
 
-<img src='images/network.png'>
+<img src='images/network.png' >
 
 ## 🚀 From the Agent
 
@@ -37,65 +37,84 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
 
 </details>
 
-## ✨ Modules ✨
+<h2>✨ Modules ✨</h2>
 
 <details>
   <summary>Utils Documentation</summary>
-
-1. Agent Class 🌟: The core of the framework, embodying a top-level AI agent.
- <br>
-
-   - Key Features 🛠️:
-     - Initialization with name, path, type, and embedding parameters.
-     - Integration of Encoder, DB, and NewCourse instances.
-     - Functionalities for course creation, chat interactions, and instance management.
   <br>
 
-2. ChatBot Module 💬: Manages the agent's conversational abilities.
-   - Functionality 🗣️:
-     - Handles chat loading and interactions 🔄.
-     - Seamlessly integrates with the Agent class .
-  <br>
-
-3. NewCourse Module 📖: Facilitates new course creation and management.
-   - Implementation 🔧:
-     - Enables course creation from documents .
-     - Supports content updates and loading .
-  <br>
-
-4. Encoder Module : Responsible for data encoding and processing.
-   - Operations 🧠:
-     - Manages document encoding and vector databases 💾.
-     - Handles embedding parameters .
-  <br>
-
-</details>
-
-## 🧬 Installation
-
-<details>
-
-  <summary>Nature, finds a way</summary>
+  <ol>
+    <li>
+      <b>Agent Class 🌟</b>: The core of the framework, embodying a top-level AI agent.
+      <ul>
+        <li><b>Initialization</b>: Specify name, path, type, and embedding parameters.</li>
+        <li><b>Integration</b>: Combines Encoder, DB, and NewCourse instances.</li>
+        <li><b>Functionalities</b>: Supports course creation, chat interactions, and instance management.</li>
+      </ul>
+    </li>
     <br>
 
-1. Clone the Repository 🌠:
-   `git clone https://github.com/LilaShiba/SND_Agents.git`
-   - This will get you started with your own local copy of the project.
- <br>
+    <li>
+      <b>ChatBot Module 💬</b>: Manages the agent's conversational abilities.
+      <ul>
+        <li><b>Chat Handling</b>: Manages chat loading and interactions 🔄.</li>
+        <li><b>Integration</b>: Seamlessly works with the Agent class.</li>
+      </ul>
+    </li>
+    <br>
 
-2. Ensure Python Environment 🐍:
-   - Make sure Python >= 3.10 is installed on your machine.
-     <br>
+    <li>
+      <b>NewCourse Module 📖</b>: Facilitates new course creation and management.
+      <ul>
+        <li><b>Course Creation</b>: Enables creation from documents.</li>
+        <li><b>Content Management</b>: Supports content updates and loading.</li>
+      </ul>
+    </li>
+    <br>
 
-3. Install Dependencies 🧬:
-   - Run `pip install -r requirements.txt` to install necessary packages like numpy, openAI, etc, ensuring smooth operation of the framework.
-     <br>
-
-4. Initialize the Agent 🤖:
-   - Execute the main script with `python main.py` to kickstart your AI agent's journey.
-     <br>
-
+    <li>
+      <b>Encoder Module</b>: Responsible for data encoding and processing.
+      <ul>
+        <li><b>Document Handling</b>: Manages document encoding and vector databases 💾.</li>
+        <li><b>Embedding Management</b>: Handles embedding parameters.</li>
+      </ul>
+    </li>
+  </ol>
 </details>
+
+<h2>🧬 Installation</h2>
+
+<details>
+  <summary>Nature, finds a way</summary>
+  <br>
+
+  <ol>
+    <li>
+      <b>Clone the Repository 🌠</b>:
+      <pre><code>git clone https://github.com/LilaShiba/SND_Agents.git</code></pre>
+    </li>
+    <br>
+
+    <li>
+      <b>Ensure Python Environment 🐍 >= 3.10</b>.
+    </li>
+    <br>
+
+    <li>
+      <b>Install Dependencies 🧬</b>:
+      <pre><code>pip install -r requirements.txt</code></pre>
+      Installs necessary packages like numpy, openAI, etc, ensuring smooth operation of the framework.
+    </li>
+    <br>
+
+    <li>
+      <b>Initialize the Agent 🤖</b>:
+      <pre><code>python main.py</code></pre>
+      Execute this to kickstart your AI agent's journey.
+    </li>
+  </ol>
+</details>
+
 
 ## 💻 Single Agent Example
 
