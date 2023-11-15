@@ -49,7 +49,7 @@ class Pack:
         # Create or load embeddings
         self.load_agent_docs()
 
-    def update_edges(self) -> dict:
+    def update_edges(self, k: int = 2) -> dict:
         '''
         cycle through knn to add edges for K combinations
         Within range x
@@ -58,7 +58,7 @@ class Pack:
         edges = defaultdict()
 
         for idx, node in enumerate(self.agents):
-            delta_edges = self.knn.search(node.state, 3)
+            delta_edges = self.knn.search(node.state, k)
             self.agents[idx].edges.append([n.name for n in delta_edges])
             edges[node.name] = [node.name for node in delta_edges]
 
@@ -69,7 +69,7 @@ class Pack:
         '''
         creates networkX graph from self.edges
         '''
-
+        self.G = nx.Graph()
         for agent, connections in self.edges.items():
             for connection in connections:
                 # Assuming each connection is a tuple representing another agent
@@ -128,7 +128,7 @@ class Pack:
         res = defaultdict()
         for agent in self.agents:
             res[agent.name] = agent.chat_bot.one_question(prompt)
-            time.sleep(60)
+            # time.sleep(60)
         logging.info(res)
         logging.debug(res)
 
@@ -150,7 +150,7 @@ class Pack:
 
             for agent in self.agents:
                 res[agent.name] = agent.chat_bot.one_question(prompt)
-                time.sleep(60)
+                # time.sleep(60)
             logging.info(res)
             print('Here are the collective answers: ')
             print(res)
