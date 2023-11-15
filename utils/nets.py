@@ -35,7 +35,7 @@ class Neuron:
         self.layer: int = layer
         self.biases: float = bias
         self.neural_params: np.ndarray = np.random.rand(3, 2)
-        self.state: float = np.random.randint(-1, 1)
+        self.state: float = np.random.normal(mu, sigma)
         self.signal: np.ndarray = np.array(
             [self.input, self.state, 1])
         self.edges: Dict = defaultdict()
@@ -71,12 +71,12 @@ class Neuron:
         Updates self.input & self.state inside self.signal
 
         """
-        z: np.ndarray = np.dot(self.neural_params.T, self.signal) + self.biases
+        z: np.ndarray = np.dot(self.neural_params.T, self.signal)
         self.input, self.state = self.activate(z, False)
         self.signal = [self.input, self.state, 1]
         print(self.signal)
 
-    def backprop(self, target: float, learning_rate: float = 0.01):
+    def backprop(self, target: float, learning_rate: float = 0.01, debug=False):
         """
         Performs backpropagation for the neuron.
 
@@ -92,9 +92,11 @@ class Neuron:
 
         # Updating weights and biases
         # Assuming the gradient is simply the error times the input signal
-        gradient = error * self.signal
-        self.neural_params -= learning_rate * \
-            gradient.reshape(self.neural_params.shape)
+        gradient = np.array(error) * np.array(self.signal)
+        print('gradient:', gradient)
+
+        self.neural_params[:, 0] -= learning_rate * gradient
+        self.neural_params[:, 1] -= learning_rate * gradient
 
         # Update the bias
         self.biases -= learning_rate * error
@@ -116,10 +118,6 @@ class Neuron:
         res: List[Union[float, 'Neuron']] = [(abs(neuron.input - self.input), neuron)
                                              for neuron in layer if abs(neuron.input - self.input) <= threshold]
         return heapq.nsmallest(k, res, key=lambda x: x[0])
-
-    def backprop(self) -> None:
-        """Backpropagation method (to be implemented)."""
-        pass
 
     # Getters & Setters
     def get_state(self) -> float:
@@ -158,8 +156,9 @@ class Neuron:
 if __name__ == "__main__":
 
     neuron = Neuron(0.5, 1)
-    plt.plot(neuron.signal)
-    plt.show()
-    neuron.feed_forward()
-    plt.plot(neuron.signal)
-    plt.show()
+    # plt.plot(neuron.signal)
+    # plt.show()
+    neuron.feed_forward(neuron.signal)
+    # plt.plot(neuron.signal)
+    # plt.show()
+    neuron.backprop(0.9)
