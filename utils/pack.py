@@ -121,7 +121,7 @@ class Pack:
 
         print('upload successful :)')
 
-    def one_question(self, prompt):
+    def one_question(self, prompt: str):
         '''
         one question for pack
         '''

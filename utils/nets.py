@@ -65,16 +65,17 @@ class Neuron:
         """
         return 1.0 - np.tanh(x) ** 2
 
-    def feed_forward(self, signal: np.array = None) -> None:
+    def feed_forward(self, signal: np.array = None, debug=False) -> None:
         """
         Performs the feed forward operation of the neuron.
         Updates self.input & self.state inside self.signal
 
         """
-        z: np.ndarray = np.dot(self.neural_params.T, self.signal)
-        self.input, self.state = self.activate(z, False)
+        z: np.ndarray = np.dot(self.neural_params.T, self.signal) + self.biases
+        self.input, self.state = self.activate(z, sig=False)
         self.signal = [self.input, self.state, 1]
-        print(self.signal)
+        if debug:
+            print(f'signal {self.signal}')
 
     def backprop(self, target: float, learning_rate: float = 0.01, debug=False):
         """
@@ -88,15 +89,18 @@ class Neuron:
         # Error calculation
         # For output neurons, this would be (target - self.output)
         # For hidden neurons, you'll need to calculate the error differently
-        error = (target - self.state) * self.activate_derivative(self.input)
+        error = (target - self.input)
 
         # Updating weights and biases
         # Assuming the gradient is simply the error times the input signal
         gradient = np.array(error) * np.array(self.signal)
-        print('gradient:', gradient)
+        if debug:
+            print('gradient:', gradient)
 
-        self.neural_params[:, 0] -= learning_rate * gradient
-        self.neural_params[:, 1] -= learning_rate * gradient
+        self.neural_params[:, 0] -= np.dot(self.neural_params[:,
+                                                              0], (gradient * learning_rate))
+        self.neural_params[:, 1] -= np.dot(self.neural_params[:,
+                                                              1], (gradient * learning_rate))
 
         # Update the bias
         self.biases -= learning_rate * error
@@ -118,8 +122,8 @@ class Neuron:
         res: List[Union[float, 'Neuron']] = [(abs(neuron.input - self.input), neuron)
                                              for neuron in layer if abs(neuron.input - self.input) <= threshold]
         return heapq.nsmallest(k, res, key=lambda x: x[0])
-
     # Getters & Setters
+
     def get_state(self) -> float:
         """Returns the current state of the neuron."""
         return self.state
@@ -155,10 +159,18 @@ class Neuron:
 
 if __name__ == "__main__":
 
-    neuron = Neuron(0.5, 1)
+    n1 = Neuron(0.5, 1)
+    n2 = Neuron(0.5, 2)
+    y = 0.78
     # plt.plot(neuron.signal)
     # plt.show()
-    neuron.feed_forward(neuron.signal)
+    for idx in range(100):
+        n1.feed_forward(n1.signal)
+        n2.feed_forward(n2.signal)
+        n1.backprop(y)
+        n2.backprop(y)
+        if idx % 10 == 0:
+            print(f'n1: {n1.state} n2: {n2.state}')
+
     # plt.plot(neuron.signal)
     # plt.show()
-    neuron.backprop(0.9)
