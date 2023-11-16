@@ -4,7 +4,7 @@ This AI Entity Framework is a cutting-edge system designed for crafting intellig
 
 ### A network of agents 🧙🧙🧙
 
-<img src='images/network.png' >
+<img src='images/output.png' >
 
 ## 🚀 From the Agent
 
@@ -114,7 +114,6 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
     </li>
   </ol>
 </details>
-
 
 ## 💻 Single Agent Example
 
