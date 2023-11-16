@@ -1,11 +1,12 @@
 from utils.agent import Agent
 from utils.metrics import ThoughtDiversity
+from utils.knn import Knn
+
 from typing import Any
 import logging
 from itertools import combinations
 from collections import defaultdict
 import time
-from utils.knn import Knn
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -24,6 +25,7 @@ class Pack:
         embedding_params (list): llm, chunk, overlap, creativeness
         '''
         self.edges = list()
+        self.weighted_edges = defaultdict()
         self.G = nx.Graph()
         self.agents = []
         self.agent_dict = defaultdict()
@@ -48,6 +50,25 @@ class Pack:
         self.embeddings = embedding_params
         # Create or load embeddings
         self.load_agent_docs()
+        self.metrics = ThoughtDiversity(self)
+
+    def update_weighted_edges(self, question: str, weighted_adj_matrix: dict, k: int = 2) -> dict:
+        '''
+        cycle through knn to add edges for K combinations
+        Within range x
+        TODO: get distrubution rather than last set in montecarlo expirment
+        '''
+        edges = defaultdict()
+        self.metrics.monte_carlo_sim(question=question, rounds=1)
+        print('monte carlo finished')
+        for idx, node in enumerate(self.agents):
+            delta_edges = self.knn.search(node.state, k)
+            self.agents[idx].edges.append([n.name for n in delta_edges])
+            edges[node.name] = [
+                n.name for n in delta_edges if n.name != node.name]
+
+        self.edges = edges
+        return edges
 
     def update_edges(self, k: int = 2) -> dict:
         '''
@@ -150,7 +171,7 @@ class Pack:
 
             for agent in self.agents:
                 res[agent.name] = agent.chat_bot.one_question(prompt)
-                # time.sleep(60)
+                # `time.sleep(60)
             logging.info(res)
             print('Here are the collective answers: ')
             print(res)

@@ -145,8 +145,8 @@ class ChatBot:
 
         response = qa_chain({"query": self.question})
         # print(f"{self.name}: {response}")
-        logging.info(response['result'])
-        logging.debug(response['result'])
+        # logging.info(response['result'])
+        # logging.debug(response['result'])
 
         return response['result']
 

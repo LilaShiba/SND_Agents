@@ -31,7 +31,8 @@ class Agent:
         # Pack Details
         self.edges: list = list()
         # input, ouput : x,y for knn is dynamic. Add N Features for knn
-        self.state: list = [np.random.rand(), np.random.rand()]
+        self.state: list = [
+            np.random.rand(), np.random.rand(), np.random.rand()]
         self.heading: float = np.random.rand() * 2 * np.pi
         # Subprocesses
         # creates self.docs

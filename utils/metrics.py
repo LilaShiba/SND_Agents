@@ -4,6 +4,7 @@ from collections import Counter
 import logging
 from scipy.stats import wasserstein_distance
 import time
+from collections import defaultdict
 
 
 class ThoughtDiversity:
@@ -28,7 +29,7 @@ class ThoughtDiversity:
         self.wasserstein_metrics = []
         self.ginis = []
 
-    def monte_carlo_sim(self, question: str = "", rounds: int = 5) -> List[Any]:
+    def monte_carlo_sim(self, question: str = "", rounds: int = 1) -> List[Any]:
         """
         Run a Monte Carlo simulation to assess thought diversity.
 
@@ -44,27 +45,32 @@ class ThoughtDiversity:
 
         for _ in range(rounds):
             round_res = self.pack.one_question(question)
-            time.sleep(60)
             # Extract responses from individual agents
-            responses = [round_res[agent_name]
+            responses = [(agent_name, round_res[agent_name])
                          for agent_name in self.pack.agent_names if agent_name in round_res]
-
+            weights = defaultdict()
             if responses:
                 # Processing each agent's response
-                for response in responses:
+                for agent_name, response in responses:
+
                     prob_vector = self._prob_vectors(response)
                     entropy = self.shannon_entropy(prob_vector)
                     diversity = self.true_diversity(prob_vector)
                     self.shannon_entropy_scores.append(entropy)
                     self.true_diversity_scores.append(diversity)
+                    delta = [entropy, diversity]
 
                 # Calculating Wasserstein metrics
                 for i in range(len(responses)):
+                    name = response[i]
                     for j in range(i + 1, len(responses)):
                         w_metric = self.wasserstein(self._prob_vectors(
                             responses[i]), self._prob_vectors(responses[j]))
                         self.wasserstein_metrics.append(w_metric)
+                    delta.append(w_metric)
+                    self.pack.agents[i].state = delta
 
+        self.pack.weighted_edges = weights
         return [self.shannon_entropy_scores, self.true_diversity_scores, self.wasserstein_metrics]
 
     def _prob_vectors(self, vector: List[str]) -> List[float]:
