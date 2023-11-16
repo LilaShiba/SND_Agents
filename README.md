@@ -4,7 +4,7 @@ This AI Entity Framework is a cutting-edge system designed for crafting intellig
 
 ### A network of agents 🧙🧙🧙
 
-<img src='images/output.png' >
+<img src='images/output.png' width='800' height='auto' >
 
 ## 🚀 From the Agent
 
@@ -18,15 +18,15 @@ This AI Entity Framework is a cutting-edge system designed for crafting intellig
  <br>
   <br>
 
-In this world, foundational models had become a crucial part of our daily lives. Companies like Google, with its vast user base, relied on these models to power their search engines. With each passing day, the impact of foundational models on society grew more profound.\n\nHowever, as with any powerful tool, the deployment of foundational models came with both opportunities and risks. The creators of these models recognized that the responsibility lay not only in building them, but also in their careful curation and adaptation. They understood that the ultimate source of data for training foundational models was people, and it was crucial to consider the potential benefits and harms that could befall them.
+In this world, foundational models had become a crucial part of our daily lives. Companies like Google, with its vast user base, relied on these models to power their search engines. With each passing day, the impact of foundational models on society grew more profound. However, as with any powerful tool, the deployment of foundational models came with both opportunities and risks. The creators of these models recognized that the responsibility lay not only in building them, but also in their careful curation and adaptation. They understood that the ultimate source of data for training foundational models was people, and it was crucial to consider the potential benefits and harms that could befall them.
  <br>
   <br>
 
-Thoughtful data curation became an integral part of the responsible development of AI systems. The creators realized that the quality and nature of the foundation on which these models stood had to be understood and characterized. After all, poorly-constructed foundations could lead to disastrous consequences, while well-executed foundations could serve as a reliable bedrock for future applications.\n\nAs the next five years unfolded, the integration of foundational models into real-world deployments reached new heights. The impact on people became even more far-reaching. These models were no longer limited to language tasks; their scope expanded to encompass a multitude of applications. They became the backbone of various AI systems, shaping the way we interacted with technology on a daily basis.
+Thoughtful data curation became an integral part of the responsible development of AI systems. The creators realized that the quality and nature of the foundation on which these models stood had to be understood and characterized. After all, poorly-constructed foundations could lead to disastrous consequences, while well-executed foundations could serve as a reliable bedrock for future applications. As the next five years unfolded, the integration of foundational models into real-world deployments reached new heights. The impact on people became even more far-reaching. These models were no longer limited to language tasks; their scope expanded to encompass a multitude of applications. They became the backbone of various AI systems, shaping the way we interacted with technology on a daily basis.
  <br>
   <br>
 
-However, the true nature of these foundational models remained a mystery. Researchers, foundation model providers, application developers, policymakers, and society at large grappled with the question of trustworthiness. It became a critical problem to address, as the consequences of relying on faulty foundations could have severe implications for individuals and communities.\n\nIn this evolving landscape, humans played a crucial role. They were not only the providers of data but also the recipients of the benefits and harms that emerged from the deployment of foundational models. It was their responsibility to ensure that these models were used ethically and responsibly.
+However, the true nature of these foundational models remained a mystery. Researchers, foundation model providers, application developers, policymakers, and society at large grappled with the question of trustworthiness. It became a critical problem to address, as the consequences of relying on faulty foundations could have severe implications for individuals and communities. In this evolving landscape, humans played a crucial role. They were not only the providers of data but also the recipients of the benefits and harms that emerged from the deployment of foundational models. It was their responsibility to ensure that these models were used ethically and responsibly.
  <br>
   <br>
 
@@ -52,8 +52,6 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
         <li><b>Functionalities</b>: Supports course creation, chat interactions, and instance management.</li>
       </ul>
     </li>
-    <br>
-
     <li>
       <b>ChatBot Module 💬</b>: Manages the agent's conversational abilities.
       <ul>
@@ -61,8 +59,6 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
         <li><b>Integration</b>: Seamlessly works with the Agent class.</li>
       </ul>
     </li>
-    <br>
-
     <li>
       <b>NewCourse Module 📖</b>: Facilitates new course creation and management.
       <ul>
@@ -70,13 +66,38 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
         <li><b>Content Management</b>: Supports content updates and loading.</li>
       </ul>
     </li>
-    <br>
-
     <li>
       <b>Encoder Module</b>: Responsible for data encoding and processing.
       <ul>
         <li><b>Document Handling</b>: Manages document encoding and vector databases 💾.</li>
         <li><b>Embedding Management</b>: Handles embedding parameters.</li>
+      </ul>
+    </li>
+    <li>
+      <b>Pack Class 🐺</b>: Integrates multiple AI agents for collaborative processing and decision-making.
+      <ul>
+        <li><b>Initialization</b>: Sets up with a list of agent specifications and optional embedding parameters. Default parameters are provided if not specified.</li>
+        <li><b>Composition</b>: Combines three AI agents into a unified framework, allowing for complex interactions and data processing.</li>
+        <li><b>Functionalities</b>: Manages agent interactions, updates network connections, and processes collective responses. Supports document loading for agents, and enables comprehensive data analysis through graph representation and diversity metrics.</li>
+        <li><b>Integration</b>: Works with Knn for nearest neighbor calculations, utilizes ThoughtDiversity for diversity metrics, and interfaces with individual agents for specific tasks like document processing and chat interactions.</li>
+      </ul>
+    </li>
+    <li>
+      <b>ThoughtDiversity Class 🌐</b>: Evaluates the diversity of thought in a collective of AI agents.
+      <ul>
+        <li><b>Initialization</b>: Sets up with an Agent_Pack instance, preparing it for diversity analysis.</li>
+        <li><b>Functionalities</b>: Conducts Monte Carlo simulations to assess thought diversity, calculates Shannon Entropy and True Diversity scores, and determines Wasserstein metrics for comparative analysis.</li>
+        <li><b>Analysis Tools</b>: Includes methods for creating probability vectors from agent responses, calculating Shannon Entropy and True Diversity, and computing Wasserstein distances between probability vectors.</li>
+        <li><b>Application</b>: Aims to provide a quantitative measure of thought diversity within a group of AI agents, enhancing decision-making and problem-solving processes.</li>
+      </ul>
+    </li>
+    <li>
+      <b>Neuron Class 🧠</b>: Represents a single neuron in a neural network for complex data processing and learning.
+      <ul>
+        <li><b>Initialization</b>: Configures with initial input, unique ID, layer position, mean and standard deviation for state initialization, and bias. Initializes random weights and state.</li>
+        <li><b>Functionalities</b>: Implements tanh and optional sigmoid for neuronal activation. Conducts forward propagation of signals through the neuron. Adjusts weights and biases based on error and learning rate to optimize network performance. Identifies k-nearest neighboring neurons based on input differences within a specified threshold.</li>
+        <li><b>State Management</b>: Provides methods to get and set the neuron’s state and weights, ensuring dynamic adaptability during the network's learning process.</li>
+        <li><b>Visualization</b>: Capable of plotting signal strengths and neuronal changes, aiding in the analysis and understanding of the neural network’s behavior.</li>
       </ul>
     </li>
   </ol>
