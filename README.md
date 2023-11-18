@@ -115,19 +115,16 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
       <pre><code>git clone https://github.com/LilaShiba/SND_Agents.git</code></pre>
     </li>
     <br>
-
     <li>
       <b>Ensure Python Environment 🐍 >= 3.10</b>.
     </li>
     <br>
-
     <li>
       <b>Install Dependencies 🧬</b>:
       <pre><code>pip install -r requirements.txt</code></pre>
       Installs necessary packages like numpy, openAI, etc, ensuring smooth operation of the framework.
     </li>
     <br>
-
     <li>
       <b>Initialize the Agent 🤖</b>:
       <pre><code>python main.py</code></pre>
