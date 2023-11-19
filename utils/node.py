@@ -81,17 +81,27 @@ class Neuron:
 
 class Network:
 
-    def __init__(self, neurons: list) -> object:
+    def __init__(self, neurons: list, input: list, target: list) -> object:
         '''
         creates and trains network of neurons
         neurons: list (tuple (layers, neurons))
         '''
 
         self.layers = defaultdict()
+        self.x = input
+        self.y = target
 
         for idx, delta_layer in enumerate(neurons):
             self.layers[idx] = [Neuron(str(x), idx)
                                 for x in range(delta_layer)]
+
+    def train(self, x: np.array, y: np.array):
+        '''
+        x: nested array input
+        y: nested array target output
+        '''
+
+        pass
 
 
 # Example usage
@@ -99,7 +109,4 @@ if __name__ == "__main__":
     neuron = Neuron('n1', 1, 0.5, 3)
     inputs = [0.1, 0.2, 0.3, 0.4, 0.5]
     targets = [0.2, 0.4, 0.6, 0.4, 2.0]  # Example target values
-    nn = Network([64, 128, 64])
-    print(nn.layers)
-    # errors = neuron.train(inputs, targets, learning_rate=0.01, epochs=50)
-    # neuron.graph(errors)
+    nn = Network([64, 128, 64], inputs, targets)

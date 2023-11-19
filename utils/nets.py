@@ -166,11 +166,11 @@ if __name__ == "__main__":
     # plt.show()
     for idx in range(100):
         n1.feed_forward(n1.signal)
-        n2.feed_forward(n2.signal)
+        n2.feed_forward(n1.signal)
         n1.backprop(y)
         n2.backprop(y)
         if idx % 10 == 0:
-            print(f'n1: {n1.state} n2: {n2.state}')
+            print(f'n1: {n1.input} n2: {n2.input}')
 
-    # plt.plot(neuron.signal)
-    # plt.show()
+    plt.plot(n1.signal)
+    plt.show()
