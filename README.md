@@ -4,6 +4,8 @@ This AI Entity Framework is a cutting-edge system designed for crafting intellig
 
 ### A network of agents 🧙🧙🧙
 
+Here, a network of agents is created based on a vector of diversity scores taken from the agent repsonse. The next steps are to enable unqiue answers based on different agent responses. The hope is this will include as many viewpoints as possiable.
+
 <img src='images/output.png' width='800' height='auto' >
 
 ## 🚀 From the Agent
