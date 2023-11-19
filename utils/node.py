@@ -23,7 +23,7 @@ class Neuron:
         self.vector[-1] = 1
         # input power law distro (to mimic actual neurons)
         if not input:
-            self.input: float = np.random.power(-1, 1)
+            self.input: float = np.random.normal(np.pi) * 2
         else:
             self.input: float = input
         # Direction
@@ -60,10 +60,46 @@ class Neuron:
         '''
         return 1.0 - np.tanh(x) ** 2
 
+    def backpropagate(self, target: float, learning_rate: float) -> float:
+        """
+        Compute the error and update weights and biases
+        """
+        # Compute error (difference between target and actual output)
+        error = target - self.vector[0]
 
+        # Compute gradients for weights and biases
+        d_weights = error * \
+            self.activation_derivative(self.vector[0]) * self.vector
+        d_biases = error * self.activation_derivative(self.vector[0])
+
+        # Update weights and biases
+        self.weights += learning_rate * d_weights.T
+        self.biases += learning_rate * d_biases
+
+        return error ** 2  # Return squared error
+
+
+class Network:
+
+    def __init__(self, neurons: list) -> object:
+        '''
+        creates and trains network of neurons
+        neurons: list (tuple (layers, neurons))
+        '''
+
+        self.layers = defaultdict()
+
+        for idx, delta_layer in enumerate(neurons):
+            self.layers[idx] = [Neuron(str(x), idx)
+                                for x in range(delta_layer)]
+
+
+# Example usage
 if __name__ == "__main__":
-    X = 0.4444
-    y = 0.3333
-    n1 = Neuron('n1', 1, X, 3)
-    n2 = Neuron('n2', 2, X, 3)
-    print(n1.feedforward(n2))
+    neuron = Neuron('n1', 1, 0.5, 3)
+    inputs = [0.1, 0.2, 0.3, 0.4, 0.5]
+    targets = [0.2, 0.4, 0.6, 0.4, 2.0]  # Example target values
+    nn = Network([64, 128, 64])
+    print(nn.layers)
+    # errors = neuron.train(inputs, targets, learning_rate=0.01, epochs=50)
+    # neuron.graph(errors)
