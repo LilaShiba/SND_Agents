@@ -41,7 +41,7 @@ class Neuron:
         propagates signal through neuron
         '''
         # delta = [self.vector] * node.weights.T
-        delta = np.dot(self.weights, self.vector.T)
+        delta = np.dot(self.weights, self.vector.T) + self.biases
         delta_input, delta_state = self.activate(delta)
         self.vector = np.array([delta_input, delta_state, 1])
         return delta_input, delta_state
