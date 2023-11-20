@@ -1,10 +1,14 @@
 # 🦄 About This Framework
 
-This AI Entity Framework is a cutting-edge system designed for crafting intelligent agent(s). These agent(s) are not just typical AI entities; they are foundational, adaptable, and capable of underpinning a wide array of applications. 🌟 This framework recognizes the profound potential and responsibility inherent in AI development. Emphasizing thoughtful data curation and responsible AI usage, this framework aspires to maximize the benefits of foundational models while minimizing potential harms.
+This AI Entity Framework is a cutting-edge system designed for crafting intelligent agent(s). These agent(s) are not just typical AI entities; they are foundational, adaptable, and capable of underpinning a wide array of applications. 🌟 This framework recognizes the profound potential and responsibility inherent in AI development. Emphasizing thoughtful data curation and responsible AI usage, this framework aspires to maximize the benefits of <a href="https://arxiv.org/abs/2108.07258">foundational models while minimizing potential harms</a>.
 
 ### A network of agents 🧙🧙🧙
 
-Here, a network of agents is created based on a vector of diversity scores taken from the agent repsonse. The next steps are to enable unqiue answers based on different agent responses. The hope is this will include as many viewpoints as possiable.
+Here, a network of agents is created based on vector representation of diversity scores taken from the agent(s) repsonse(s).
+
+### Objective for M3
+
+Combine agent answers in a <a href="https://arxiv.org/abs/2004.04906">bounded high diminsional plane</a>
 
 <img src='images/output.png' width='800' height='auto' >
 
@@ -174,6 +178,10 @@ agent_specs = [
 test_pack = Pack(agent_specs, embedding_params)
 
 ```
+
+## Use
+
+<img src='images/ex_network.png'>
 
 ## Synaptic Connections (2D representation of N feature)
 
