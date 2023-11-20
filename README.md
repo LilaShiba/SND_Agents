@@ -1,21 +1,29 @@
 # 🦄 About This Framework
 
-This AI Entity Framework is a cutting-edge system designed for crafting intelligent agent(s). These agent(s) are not just typical AI entities; they are foundational, adaptable, and capable of underpinning a wide array of applications. 🌟 This framework recognizes the profound potential and responsibility inherent in AI development. Emphasizing thoughtful data curation and responsible AI usage, this framework aspires to maximize the benefits of <a href="https://arxiv.org/abs/2108.07258">foundational models while minimizing potential harms</a>.
+This AI Entity Framework is a cutting-edge system designed for crafting intelligent agent(s). These agent(s) are not just typical AI entities; they are foundational, adaptable, and capable of underpinning a wide array of applications. 🌟 This framework aspires to maximize the benefits of <a href="https://arxiv.org/abs/2108.07258">foundational models while minimizing potential harms</a>.
 
 ### A network of agents 🧙🧙🧙
 
-Here, a network of agents is created based on vector representation of diversity scores taken from the agent(s) repsonse(s) to a prompt.
+Here, a network of agents <code>G = (V, E)</code> is created based on vector representation of diversity scores taken from the agent(s) repsonse(s) to a prompt.
 
-<img src='images/output.png' width='800' height='auto' >
+<center><img src='images/output.png' width='500' height='auto' ></center>
 
 ### Objective for M3
 
-Combine agent answers in a <a href="https://arxiv.org/abs/2004.04906">bounded high diminsional plane</a> using the Neuron class.
+🧠🌌 Create a bounded high diminsional plane of semantic understanding of agent answers using the Neuron class.  Mimicing the theory behind <a href="https://arxiv.org/abs/2004.04906">this paper</a> the scope of the bounded space would be 500 words max.
+
+Neuron Architecture to create vector embeddings
+
+<center><img src="images/neuron.png" height="250" width="auto"></center>
+<br>
+<br>
+
+🔬👩‍💻 Analyze the network of agents and their responses. Change edge update algorithm from KNN to heuristic based so that diversity in connections may happen. Allow random activation functions within and between network layers.
 
 ## 🚀 From the Agent
 
 <details>
-  <summary> A Story from AI about AI </summary>
+  <summary> A Story About AI from AI </summary>
   
   Once upon a time, in a world not too different from our own, there existed a revolutionary technology known as foundational models. These models were not ordinary AI systems; they were powerful, adaptable, and capable of serving as the basis for a wide range of tasks. They were like the foundation of a building, providing stability, safety, and security for the applications built upon them.
    <br>
@@ -98,8 +106,8 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
       </ul>
     </li>
     <li>
-      <b>Neuron Class 🧠</b>: Represents a single neuron in a neural network for complex data processing and learning. Implementation of the <a href ="https://arxiv.org/abs/2108.07258">following paper</a>
-      <center><img src="images/neuron.png" height="500" width="auto"></center>
+      <b>Neuron Class 🧠</b>: Represents a single neuron in a neural network for complex data processing and learning. Implementation of the <a href ="https://arxiv.org/abs/2305.15945">following paper</a>
+      <center><img src="images/formula.png" height="250" width="auto"></center>
       <ul>
         <li><b>Initialization</b>: Configures with initial input, unique ID, layer position, mean and standard deviation for state initialization, and bias. Initializes random weights and state.</li>
         <li><b>Functionalities</b>: Implements tanh and optional sigmoid for neuronal activation. Conducts forward propagation of signals through the neuron. Adjusts weights and biases based on error and learning rate to optimize network performance. Identifies k-nearest neighboring neurons based on input differences within a specified threshold.</li>
@@ -130,6 +138,11 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
       <b>Install Dependencies 🧬</b>:
       <pre><code>pip install -r requirements.txt</code></pre>
       Installs necessary packages like numpy, openAI, etc, ensuring smooth operation of the framework.
+    </li>
+    <br>
+    <li>
+      <b>Get Your OpenAI API Key🤖</b>:
+      <a href ="https://openai.com/blog/openai-api">Sign Up to get semantic embeddings</a>
     </li>
     <br>
     <li>
