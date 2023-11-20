@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from typing import *
+import logging
 
 
 class Knn:
@@ -14,7 +15,7 @@ class Knn:
     def __init__(self, objects: List[object]) -> None:
         self.objects = objects
 
-    def search(self, query_point: np.ndarray, k: int = 0, threshold: float = 0.5) -> List[object]:
+    def search(self, query_point: np.ndarray, k: int = 0) -> List[object]:
         """
         Perform a K-Nearest Neighbors search.
 
@@ -25,13 +26,19 @@ class Knn:
         Returns:
             List[object]: The k-nearest neighbors.
         """
+        # an agents vector magnitude must be shorter than 50% of connections by default
+        threshold = np.mean([np.linalg.norm(agent.state)
+                            for agent in self.objects])
+
+        logging.info(np.linalg.norm(self.objects[1].state))
 
         distances = [(obj, np.tanh(np.linalg.norm(np.array(obj.state) - np.array(query_point))))
                      for obj in self.objects]
         sorted_indices = np.argsort([item[1] for item in distances])
         if 1 > k:
             # np.linalg.norm() Turns vector into scalar
-            return [self.objects[i] for i in sorted_indices if np.linalg.norm(self.objects[i].state) > threshold]
+            # TODO create probabilities distro of edges based on network science of the human brain
+            return [self.objects[i] for i in sorted_indices if np.linalg.norm(self.objects[i].state) < threshold and np.random.rand() >= 0.3]
         # KNN Path
         return [self.objects[i] for i in sorted_indices[:k]]
 

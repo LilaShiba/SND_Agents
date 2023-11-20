@@ -4,7 +4,7 @@ import numpy as np
 from utils.chatbot import ChatBot
 from utils.loader import NewCourse
 from utils.encoder import Encoder
-from utils.knn import Knn
+from utils.connections import Knn
 
 
 class Agent:
@@ -28,11 +28,16 @@ class Agent:
         self.cot_name: int = cot_type
         self.embedding_params: list = embedding_params
         self.old_course = old_course
+        # word probablity of response to prompt
+        self.prob_vector: list = list()
+        self.response: str = ""
         # Pack Details
         self.edges: list = list()
         # input, ouput : x,y for knn is dynamic. Add N Features for knn
         self.state: list = [
             np.random.rand(), np.random.rand(), np.random.rand()]
+
+        # Radians for later movement within bounded search space: see knn (to be renamed)
         self.heading: float = np.random.rand() * 2 * np.pi
         # Subprocesses
         # creates self.docs
@@ -45,7 +50,7 @@ class Agent:
         print('🔮 creating encoder  🔮 ')
         # creates self.vectordb
 
-        self.encoder: object = Encoder(self.course, old_course)
+        self.encoder: object = Encoder(self.course, load=old_course)
         print('')
         print('🧚 creating chat_bot   🧚')
         self.chat_bot: object = ChatBot(self)

@@ -144,11 +144,13 @@ class ChatBot:
         #     self.question = "step by step, and one by one explain: " + self.question
 
         response = qa_chain({"query": self.question})
+        self.agent.response = response['result']
+        # self.agent.state =
         # print(f"{self.name}: {response}")
         # logging.info(response['result'])
         # logging.debug(response['result'])
 
-        return response['result']
+        return self.agent.response
 
     def add_new_docs(self, docs):
         '''

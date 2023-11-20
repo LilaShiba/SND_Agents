@@ -1,6 +1,6 @@
 from utils.agent import Agent
 from utils.metrics import ThoughtDiversity
-from utils.knn import Knn
+from utils.connections import Knn
 
 from typing import Any
 import logging
@@ -26,9 +26,10 @@ class Pack:
         '''
         self.edges = list()
         self.weighted_edges = defaultdict()
+        self.eigen_central = defaultdict()
         self.G = nx.Graph()
         self.agents = []
-        self.agent_dict = defaultdict()
+        self.agents_dict = defaultdict()
         if not embedding_params:
             embedding_params = {
                 1: ["facebook-dpr-ctx_encoder-multiset-base", 200, 25, 0.9],
@@ -39,11 +40,13 @@ class Pack:
         # subprocess add agents
         for idx, _ in enumerate(agent_specs):
             name, path, cot_type, new_bool, = agent_specs[idx]
-            self.agents.append(
-                Agent(name, path, cot_type, embedding_params[idx], new_bool))
+            delta_agent = Agent(name, path, cot_type,
+                                embedding_params[idx], new_bool)
+            self.agents_dict[name] = delta_agent
+            self.agents.append(delta_agent)
         self.agent_names = [agent.name for agent in self.agents]
         # init basic random network structure
-        self.knn = Knn(self.agents)
+        self.edge_algos = Knn(self.agents)
         self.agent_dict = {agent.name: agent for agent in self.agents}
         self.current_res = None
         self.current_jaccard_indices = None
@@ -63,7 +66,7 @@ class Pack:
         self.one_question(prompt=question)
         print('monte carlo finished')
         for idx, node in enumerate(self.agents):
-            delta_edges = self.knn.search(node.state, k)
+            delta_edges = self.edge_algos.search(node.state, k)
             self.agents[idx].edges.append([n.name for n in delta_edges])
             edges[node.name] = [
                 n.name for n in delta_edges if n.name != node.name]
@@ -71,16 +74,17 @@ class Pack:
         self.edges = edges
         return edges
 
-    def update_edges(self, k: int = 0) -> dict:
+    def update_edges(self, question: str, k: int = 0) -> dict:
         '''
         cycle through knn to add edges for K combinations
         Within range x
 
         '''
         edges = defaultdict()
-
+        # self.one_question(prompt=question)
+        self.metrics.set_vectors(question)
         for idx, node in enumerate(self.agents):
-            delta_edges = self.knn.search(node.state, k)
+            delta_edges = self.edge_algos.search(node.state, k)
             self.agents[idx].edges.append([n.name for n in delta_edges])
             edges[node.name] = [node.name for node in delta_edges]
 
@@ -95,6 +99,7 @@ class Pack:
         for agent, connections in self.edges.items():
             for connection in connections:
                 # Assuming each connection is a tuple representing another agent
+
                 self.G.add_edge(agent, str(connection))
 
         # Now, draw the graph
@@ -103,11 +108,12 @@ class Pack:
 
         # Draw the graph with labels
         nx.draw(self.G, pos, with_labels=True, node_color='lightblue',
-                edge_color='gray', node_size=2000, font_size=10)
+                edge_color='gray', node_size=200, font_size=10)
 
         # Display the plot
         plt.show()
-
+        self.eigen_central = nx.eigenvector_centrality(self.G)
+        print(self.eigen_central)
         return self.G
 
     def load_agent_docs(self):
@@ -152,8 +158,7 @@ class Pack:
             res[agent.name] = agent.chat_bot.one_question(prompt)
             # time.sleep(60)
         logging.info(res)
-        logging.debug(res)
-
+        # logging.debug(res)
         return res
 
     def chat(self):
@@ -178,45 +183,6 @@ class Pack:
             print(res)
             self.current_res = res
             # self.jaccard_similarity(res)
-
-    def jaccard_similarity(self, prompt: str, res=None):
-        '''
-        Return all jaccard indices for a given prompt
-        '''
-        self.current_jaccard_indices = []
-        if not res:
-            res = self.current_res
-        # Step 1: Shingling
-        shing_strings = []
-
-        for agent in self.agents:
-            res[agent.name] = agent.chat_bot.one_question(prompt)
-            shing_strings.append(res[agent.name])
-
-        # k = min(len(str_a), len(str_b), len(str_c)) - 1]
-        # TODO: Make dynamic / implications of standard vs. dynamic :)
-        k = self.agents[0].encoder.chunk_size
-        shingles = []
-        for shingle in shing_strings:
-            delta_shingle = set([shingle[i:i+k]
-                                for i in range(len(shingle) - k + 1)])
-
-            shingles.append(delta_shingle)
-
-        combos = list(combinations(shingles, 2))
-
-        for combo in combos:
-            a, b = combo
-            # Step 2: Intersection and Union
-            intersection_a_b = a.intersection(b)
-            union_a_b = a.union(b)
-            # Step 3: Jaccard Index Calculation
-            jaccard_index_a_b = len(intersection_a_b) / len(union_a_b)
-            self.current_jaccard_indices.append(
-                ((jaccard_index_a_b))
-            )
-        print(self.current_jaccard_indices)
-        return self.current_jaccard_indices
 
 
 if __name__ == '__main__':
