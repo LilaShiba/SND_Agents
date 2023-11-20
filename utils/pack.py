@@ -52,14 +52,15 @@ class Pack:
         self.load_agent_docs()
         self.metrics = ThoughtDiversity(self)
 
-    def update_weighted_edges(self, question: str, weighted_adj_matrix: dict, k: int = 2) -> dict:
+    def update_weighted_edges(self, question: str, k: int = 0) -> dict:
         '''
         cycle through knn to add edges for K combinations
         Within range x
         TODO: get distrubution rather than last set in montecarlo expirment
         '''
         edges = defaultdict()
-        self.metrics.monte_carlo_sim(question=question, rounds=1)
+        # self.metrics.monte_carlo_sim(question=question, rounds=1)
+        self.one_question(prompt=question)
         print('monte carlo finished')
         for idx, node in enumerate(self.agents):
             delta_edges = self.knn.search(node.state, k)
@@ -70,7 +71,7 @@ class Pack:
         self.edges = edges
         return edges
 
-    def update_edges(self, k: int = 2) -> dict:
+    def update_edges(self, k: int = 0) -> dict:
         '''
         cycle through knn to add edges for K combinations
         Within range x

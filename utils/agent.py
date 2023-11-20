@@ -47,11 +47,11 @@ class Agent:
 
         self.encoder: object = Encoder(self.course, old_course)
         print('')
-        print('🧚 creating chat_bot for  🧚')
+        print('🧚 creating chat_bot   🧚')
         self.chat_bot: object = ChatBot(self)
         print('')
-        print(f'the path  🌈 being used for {self.name} is {path}')
-        print('')
+        print(f'the path  being used for {self.name} is {path}')
+        print('🌈 ')
         self.vectordb: object = self.encoder.vectordb
 
     def add_edge(self, node: Any) -> None:

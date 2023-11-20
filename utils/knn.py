@@ -14,21 +14,25 @@ class Knn:
     def __init__(self, objects: List[object]) -> None:
         self.objects = objects
 
-    def search(self, query_point: np.ndarray, k: int) -> List[object]:
+    def search(self, query_point: np.ndarray, k: int = 0, threshold: float = 0.5) -> List[object]:
         """
         Perform a K-Nearest Neighbors search.
 
         Args:
             query_point (np.ndarray): The 2D point to query for its nearest neighbors.
-            k (int): The number of nearest neighbors to find.
+            k (int): The number of nearest neighbors to find. Default 0 will search based on threshold
 
         Returns:
             List[object]: The k-nearest neighbors.
         """
+
         distances = [(obj, np.tanh(np.linalg.norm(np.array(obj.state) - np.array(query_point))))
                      for obj in self.objects]
         sorted_indices = np.argsort([item[1] for item in distances])
-
+        if 1 > k:
+            # np.linalg.norm() Turns vector into scalar
+            return [self.objects[i] for i in sorted_indices if np.linalg.norm(self.objects[i].state) > threshold]
+        # KNN Path
         return [self.objects[i] for i in sorted_indices[:k]]
 
     def visualize(self, query_point: np.ndarray, k: int) -> None:
