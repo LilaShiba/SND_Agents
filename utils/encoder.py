@@ -35,8 +35,8 @@ class Encoder:
             model_name=self.model)
         if load:
             self.from_db(self.course_instance.doc_path)
-            return
-        self.subprocess_create_embeddings()
+        else:
+            self.subprocess_create_embeddings()
 
     def create_chunks(self, chunk=200, overlap=15):
         """
@@ -86,11 +86,11 @@ class Encoder:
         if not docs:
             docs = self.docs
         self.create_chunks(docs)
-        print("🧩 chunks created 🧩")
-        print('⚫')
+        print("🧩 chunks created for", self.name)
+        print('')
         self.embed_chunks()
-        print(" 🔗 embedding created 🔗")
-        print('⚫')
+        print(" 🔗 embedding created for", self.name)
+        print('')
         # save to disk
         self.vectordb = Chroma.from_documents(
             self.docs, self.embedding_function, persist_directory="./chroma_db/"+self.name)
@@ -159,11 +159,11 @@ class Encoder:
         embedding_function = SentenceTransformerEmbeddings(
             model_name=model)
 
-        print('loading agent...')
+        print('loading', self.name, '...')
 
         self.vectordb = Chroma(persist_directory=path_to_db,
                                embedding_function=embedding_function)
-        print('agent loaded')
+        print('agent', self.name, 'loaded')
 
     def add_documents(self, path):
         '''
