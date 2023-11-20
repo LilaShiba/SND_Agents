@@ -4,13 +4,13 @@ This AI Entity Framework is a cutting-edge system designed for crafting intellig
 
 ### A network of agents 🧙🧙🧙
 
-Here, a network of agents is created based on vector representation of diversity scores taken from the agent(s) repsonse(s).
+Here, a network of agents is created based on vector representation of diversity scores taken from the agent(s) repsonse(s) to a prompt.
+
+<img src='images/output.png' width='800' height='auto' >
 
 ### Objective for M3
 
 Combine agent answers in a <a href="https://arxiv.org/abs/2004.04906">bounded high diminsional plane</a> using the Neuron class.
-
-<img src='images/output.png' width='800' height='auto' >
 
 ## 🚀 From the Agent
 
@@ -43,10 +43,77 @@ As the story unfolds, it is up to the collective efforts of researchers, provide
 
 </details>
 
+<h2>✨ Modules ✨</h2>
+
+<details>
+  <summary>Utils Documentation</summary>
+  <br>
+
+  <ol>
+    <li>
+      <b>Agent Class 🌟</b>: The core of the framework, embodying a top-level AI agent.
+      <ul>
+        <li><b>Initialization</b>: Specify name, path, type, and embedding parameters.</li>
+        <li><b>Integration</b>: Combines Encoder, DB, and NewCourse instances.</li>
+        <li><b>Functionalities</b>: Supports course creation, chat interactions, and instance management.</li>
+      </ul>
+    </li>
+    <li>
+      <b>ChatBot Module 💬</b>: Manages the agent's conversational abilities.
+      <ul>
+        <li><b>Chat Handling</b>: Manages chat loading and interactions 🔄.</li>
+        <li><b>Integration</b>: Seamlessly works with the Agent class.</li>
+      </ul>
+    </li>
+    <li>
+      <b>NewCourse Module 📖</b>: Facilitates new course creation and management.
+      <ul>
+        <li><b>Course Creation</b>: Enables creation from documents.</li>
+        <li><b>Content Management</b>: Supports content updates and loading.</li>
+      </ul>
+    </li>
+    <li>
+      <b>Encoder Module</b>: Responsible for data encoding and processing.
+      <ul>
+        <li><b>Document Handling</b>: Manages document encoding and vector databases 💾.</li>
+        <li><b>Embedding Management</b>: Handles embedding parameters.</li>
+      </ul>
+    </li>
+    <li>
+      <b>Pack Class 🐺</b>: Integrates multiple AI agents for collaborative processing and decision-making.
+      <ul>
+        <li><b>Initialization</b>: Sets up with a list of agent specifications and optional embedding parameters. Default parameters are provided if not specified.</li>
+        <li><b>Composition</b>: Combines three AI agents into a unified framework, allowing for complex interactions and data processing.</li>
+        <li><b>Functionalities</b>: Manages agent interactions, updates network connections, and processes collective responses. Supports document loading for agents, and enables comprehensive data analysis through graph representation and diversity metrics.</li>
+        <li><b>Integration</b>: Works with Knn for nearest neighbor calculations, utilizes ThoughtDiversity for diversity metrics, and interfaces with individual agents for specific tasks like document processing and chat interactions.</li>
+      </ul>
+    </li>
+    <li>
+      <b>ThoughtDiversity Class 🌐</b>: Evaluates the diversity of thought in a collective of AI agents.
+      <ul>
+        <li><b>Initialization</b>: Sets up with an Agent_Pack instance, preparing it for diversity analysis.</li>
+        <li><b>Functionalities</b>: Conducts Monte Carlo simulations to assess thought diversity, calculates Shannon Entropy and True Diversity scores, and determines Wasserstein metrics for comparative analysis.</li>
+        <li><b>Analysis Tools</b>: Includes methods for creating probability vectors from agent responses, calculating Shannon Entropy and True Diversity, and computing Wasserstein distances between probability vectors.</li>
+        <li><b>Application</b>: Aims to provide a quantitative measure of thought diversity within a group of AI agents, enhancing decision-making and problem-solving processes.</li>
+      </ul>
+    </li>
+    <li>
+      <b>Neuron Class 🧠</b>: Represents a single neuron in a neural network for complex data processing and learning. Implementation of the <a href ="https://arxiv.org/abs/2108.07258">following paper</a>
+      <center><img src="images/neuron.png" height="500" width="auto"></center>
+      <ul>
+        <li><b>Initialization</b>: Configures with initial input, unique ID, layer position, mean and standard deviation for state initialization, and bias. Initializes random weights and state.</li>
+        <li><b>Functionalities</b>: Implements tanh and optional sigmoid for neuronal activation. Conducts forward propagation of signals through the neuron. Adjusts weights and biases based on error and learning rate to optimize network performance. Identifies k-nearest neighboring neurons based on input differences within a specified threshold.</li>
+        <li><b>State Management</b>: Provides methods to get and set the neuron’s state and weights, ensuring dynamic adaptability during the network's learning process.</li>
+        <li><b>Visualization</b>: Capable of plotting signal strengths and neuronal changes, aiding in the analysis and understanding of the neural network’s behavior.</li>
+      </ul>
+    </li>
+  </ol>
+</details>
+
 <h2>🧬 Installation</h2>
 
 <details>
-  <summary>Create Your Own 🤖</summary>
+    <summary>Create Your Own 🤖</summary>
   <br>
 
   <ol>
