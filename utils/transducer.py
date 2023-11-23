@@ -14,19 +14,27 @@ class Transducer:
     R = P(AuB |A + B)
     '''
 
-    def __init__(self, agent_a: object, agent_b: object) -> None:
+    def __init__(self, agents: list, question: str) -> None:
         '''
         Create bounded plane of responses for agent_a & agent_b
         '''
         # init
-        self.a: object = agent_a
-        self.b: object = agent_b
-        self.jaccard_index: float
-        self.a_prob_vect: np.array
-        self.b_prob_vect: np.array
-        self.r: np.ndarray
-        self.n: int = len(self.a.response) + len(self.b.response)
+        self.agents = defaultdict()
+        self.jaccard_indices = defaultdict()
+        self.prob_vectors = defaultdict()
+        self.r = defaultdict(int)
+        self.all_responses: str = ""
+        self.n: int
         # set values
+        for agent in agents:
+            agent.chat_bot.one_question(question)
+            self.agents[agent.name] = agent
+            self.all_responses += agent.response
+
+            for word in agent.response.split():
+                self.r[word.lower()] += 1
+        self.all_responses = set(self.all_responses.split())
+        self.n = len(self.all_responses)
         self.bounded_space()
 
     def bounded_space(self) -> None:
@@ -39,39 +47,33 @@ class Transducer:
                 the one-hot encoded vector of word frequencies.
         '''
         # Splitting responses into words and creating sets
-        words_a = set(self.a.response.split())
-        words_b = set(self.b.response.split())
 
-        # Calculating the union and intersection of word sets
-        union_words = words_a.union(words_b)
-        intersection_words = words_a.intersection(words_b)
+        for name, agent in self.agents.items():
+            response = set(agent.response.split())
 
-        # Calculating the Jaccard index
-        jaccard_index = len(intersection_words) / \
-            len(union_words) if union_words else 0
+            # Calculating the union and intersection of word sets
+            union_words = response.union(self.all_responses)
+            intersection_words = response.intersection(
+                self.all_responses)
 
-        # Counting occurrences of each word in the combined responses
-        self.r = self.word_freq(self.a.response + self.b.response)
-        self.jaccard_index = jaccard_index
+            # Calculating the Jaccard index
+            jaccard_index = len(intersection_words) / \
+                len(union_words) if union_words else 0
 
-        a_prob_vect = self.prob_vect(self.word_freq(self.a.response))
-        b_prob_vect = self.prob_vect(self.word_freq(self.b.response))
+            self.jaccard_indices[name] = jaccard_index
 
-        self.a_prob_vect = a_prob_vect
-        self.b_prob_vect = b_prob_vect
+            # Counting occurrences of each word in the combined responses
+            self.prob_vectors[name] = self.prob_vect(response)
 
-    def prob_vect(self, word_freq_dict: dict()) -> np.array:
+    def prob_vect(self, response: str) -> np.array:
         '''
         returns dict of probs of words
         '''
         prob_vect = [0] * len(self.r)
-
-        if self.n == 0:
-            self.n = len(self.a.response) + len(self.b.response)
-
+        word_freq = self.word_freq(response)
         idx = 0
         for key, _ in self.r.items():
-            prob_vect[idx] = word_freq_dict[key.lower()] / self.n
+            prob_vect[idx] = word_freq[key.lower()] / self.n
             idx += 1
 
         return prob_vect
@@ -85,7 +87,7 @@ class Transducer:
         '''
         res = defaultdict(int)
 
-        for word in pasage.split():
+        for word in pasage:
             res[word.lower()] += 1
 
         return res
@@ -100,4 +102,5 @@ if __name__ == "__main__":
     agent_norbert = Agent(
         'agent_norbert', 'chroma_db/agent_norbert', 0, embedding_params, True)
 
-    input_layer = Transducer(agent_ltoa, agent_norbert)
+    input_layer = Transducer(
+        [agent_ltoa, agent_norbert], "how can one design a neuron?")
