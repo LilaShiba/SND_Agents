@@ -4,8 +4,10 @@ This AI Entity Framework is a cutting-edge system designed for crafting intellig
 
 ### A network of agents 🧙🧙🧙
 
-Here, a network of agents <code>G = (V, E)</code> is created based on vector representation of diversity scores taken from the agent(s) repsonse(s) to a prompt.
-
+Here, a network of agents <code>G = (V, E)</code> is created based on vector representation of diversity scores taken from the agent(s) repsonse(s) to a prompt.<code> V = {jaccard_index, dot_product, entropy}</code>
+<br>
+Where probablities are calculated from <code> vector = {P(Word|All_Response) for Word in Response} </code> and where an Edge <code> E = |state_t0 * state_T1| <= Threshold </code> for KNN
+  
 <center><img src='images/output.png' width='500' height='auto' ></center>
 
 ### Objective for M3
@@ -197,6 +199,8 @@ test_pack = Pack(agent_specs, embedding_params)
 
 <img src='images/ex_network.png'>
 
-## Synaptic Connections (2D representation of N feature)
+## Synaptic Connections 3D representation of bounded agent responses
 
-<img src='images/knn_example.png'>
+<br>
+
+<img src='images/3d_bounded_space.png'>
