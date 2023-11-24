@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from typing import *
 from utils.agent import Agent
+from utils.nets import Neuron
 from collections import defaultdict
 
 
@@ -14,7 +15,7 @@ class Transducer:
     R = P(AuB |A + B)
     '''
 
-    def __init__(self, agents: list, question: str) -> None:
+    def __init__(self, agents: list, question: str = "") -> None:
         '''
         Create bounded plane of responses for agent_a & agent_b
         '''
@@ -25,9 +26,13 @@ class Transducer:
         self.r = defaultdict(int)
         self.all_responses: str = ""
         self.n: int
+        self.neurons = defaultdict()
         # set values
         for agent in agents:
-            agent.chat_bot.one_question(question)
+            if question != "":
+                print('loading agent', agent.name, '... ')
+                agent.chat_bot.one_question(question)
+
             self.agents[agent.name] = agent
             self.all_responses += agent.response
 
@@ -50,7 +55,7 @@ class Transducer:
 
         for name, agent in self.agents.items():
             response = set(agent.response.split())
-
+            print('response', response)
             # Calculating the union and intersection of word sets
             union_words = response.union(self.all_responses)
             intersection_words = response.intersection(
@@ -73,7 +78,7 @@ class Transducer:
         word_freq = self.word_freq(response)
         idx = 0
         for key, _ in self.r.items():
-            prob_vect[idx] = word_freq[key.lower()] / self.n
+            prob_vect[idx] = word_freq[key.lower()] / len(word_freq)
             idx += 1
 
         return prob_vect
@@ -91,6 +96,52 @@ class Transducer:
             res[word.lower()] += 1
 
         return res
+
+    def shannon_entropy(self, response: str) -> float:
+        """
+        Calculates the Shannon Entropy (H) of a dataset.
+
+        Parameters:
+        counts (List[float]): A list of probabilities.
+
+        Returns:
+        float: Shannon Entropy of the dataset.
+        """
+        counts = self.prob_vect(response)
+        return -sum(p * np.log(p) if p > 0 else 0 for p in counts)
+
+    def true_diversity(self, response: str) -> float:
+        """
+        Calculates the True Diversity (D) using Shannon Entropy (H).
+
+        Parameters:
+        counts (List[float]): A list of probabilities.
+
+        Returns:
+        float: True Diversity of the dataset.
+        """
+        counts = self.word_freq(response).values()
+        return np.exp(self.shannon_entropy(counts))
+
+    def create_layer(self) -> np.array:
+        '''
+        creates transducer layer for input
+        '''
+
+        main_vector = self.prob_vect(self.all_responses)
+        idx = 0
+        for name, agent in self.agents.items():
+            prob_v = np.array(self.prob_vectors[name])
+            delta_dot = np.dot(main_vector, prob_v)
+            self.neurons[name] = Neuron(input=delta_dot, id=idx, layer=1)
+            self.neurons[name].prov_v = prob_v
+            self.neurons[name].dot_product = delta_dot
+            self.neurons[name].cross = main_vector * prob_v
+            self.neurons[name].jaccard_index = self.jaccard_indices[name]
+            self.neurons[name].x = self.jaccard_indices[name]
+            self.neurons[name].y = delta_dot
+            self.neurons[name].z = self.shannon_entropy(agent.response)
+            idx += 1
 
 
 if __name__ == "__main__":

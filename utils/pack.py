@@ -74,7 +74,7 @@ class Pack:
         self.edges = edges
         return edges
 
-    def update_edges(self, question: str, k: int = 0) -> dict:
+    def update_edges(self, question: str = "", k: int = 0) -> dict:
         '''
         cycle through knn to add edges for K combinations
         Within range x
@@ -82,7 +82,8 @@ class Pack:
         '''
         edges = defaultdict()
         # self.one_question(prompt=question)
-        self.metrics.set_vectors(question)
+        if question != "":
+            self.metrics.set_vectors(question)
         for idx, node in enumerate(self.agents):
             delta_edges = self.edge_algos.search(node.state, k)
             self.agents[idx].edges.append([n.name for n in delta_edges])

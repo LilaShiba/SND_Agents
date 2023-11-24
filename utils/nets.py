@@ -23,14 +23,14 @@ class Neuron:
     """
 
     def __init__(self,
-                 input: float,
+                 input: np.array,
                  id: int,
                  layer: int = 0,
                  mu: float = 1,
                  sigma: float = 1,
                  bias: float = 0.01):
         """Initializes the Neuron with given parameters and random state and weights."""
-        self.input: float = input
+        self.input = input
         self.id: int = id
         self.layer: int = layer
         self.biases: float = bias
@@ -39,6 +39,9 @@ class Neuron:
         self.signal: np.ndarray = np.array(
             [self.input, self.state, 1])
         self.edges: Dict = defaultdict()
+        # defined in transducer
+        self.prob_v: np.array
+        self.delta_dot: np.array
 
     def activate(self, x: np.ndarray, sig: bool = False) -> np.ndarray:
         """Applies the activation function.
