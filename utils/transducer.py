@@ -141,7 +141,9 @@ class Transducer:
         float: Shannon Entropy of the dataset.
         """
         counts = Counter(response)
-        return -sum(p * np.log(p) if p > 0 else 0 for p in counts.values())
+        n = len(response)
+        probs = [c/n for c in counts.values()]
+        return -sum(p * np.log(p) if p > 0 else 0 for p in probs)
 
     def true_diversity(self, response: str) -> float:
         """
