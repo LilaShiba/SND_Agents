@@ -28,6 +28,7 @@ class Pack:
         self.weighted_edges = defaultdict()
         self.eigen_central = defaultdict()
         self.G = nx.Graph()
+        self.snd: float = 0.00
         self.agents = []
         self.agents_dict = defaultdict()
         if not embedding_params:
@@ -184,6 +185,14 @@ class Pack:
             print(res)
             self.current_res = res
             # self.jaccard_similarity(res)
+
+    def get_snd(self):
+        '''
+        Calculates System Neural Diversity 
+        As the Diameter of the graph
+        '''
+        self.snd = nx.diameter(self.G)
+        return self.snd
 
 
 if __name__ == '__main__':

@@ -30,8 +30,6 @@ class Knn:
         threshold = np.mean([np.linalg.norm(agent.state)
                             for agent in self.objects])
 
-        logging.info(np.linalg.norm(self.objects[1].state))
-
         distances = [(obj, np.tanh(np.linalg.norm(np.array(obj.state) - np.array(query_point))))
                      for obj in self.objects]
         sorted_indices = np.argsort([item[1] for item in distances])
@@ -51,7 +49,8 @@ class Knn:
             k (int): The number of nearest neighbors to visualize.
         """
         nearest_neighbors = self.search(query_point, k)
-
+        print('nearest neighbors')
+        print(nearest_neighbors)
         plt.figure()
         x_vals, y_vals = zip(*[obj.state for obj in self.objects])
         plt.scatter(x_vals, y_vals, label='Agents')

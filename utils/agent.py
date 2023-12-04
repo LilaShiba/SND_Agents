@@ -36,7 +36,7 @@ class Agent:
         # input, ouput : x,y for knn is dynamic. Add N Features for knn
         self.state: list = [
             np.random.rand(), np.random.rand(), np.random.rand()]
-
+        self.state_dot: float = 0.00
         # Radians for later movement within bounded search space: see knn (to be renamed)
         self.heading: float = np.random.rand() * 2 * np.pi
         # Subprocesses
