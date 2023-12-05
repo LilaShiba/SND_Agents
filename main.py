@@ -35,6 +35,5 @@ if __name__ == "__main__":
 
     test_pack = Pack(agent_specs, embedding_params)
     edges = test_pack.update_weighted_edges(
-        question="Imagine how a neuron for a neural network may be reimagined based on the text.",
-        weighted_adj_matrix=None, k=3)
+        question="Imagine how a neuron for a neural network may be reimagined based on the text.",  k=3)
     print(edges)
