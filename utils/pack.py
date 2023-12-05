@@ -1,6 +1,7 @@
 from utils.agent import Agent
 from utils.metrics import ThoughtDiversity
 from utils.connections import Knn
+from utils.transducer import Transducer
 
 from typing import Any
 import logging
@@ -55,6 +56,7 @@ class Pack:
         # Create or load embeddings
         self.load_agent_docs()
         self.metrics = ThoughtDiversity(self)
+        self.transducer: Transducer = None
 
     def update_weighted_edges(self, question: str, k: int = 0) -> dict:
         '''
@@ -115,7 +117,8 @@ class Pack:
         # Display the plot
         plt.show()
         self.eigen_central = nx.eigenvector_centrality(self.G)
-        print(self.eigen_central)
+        print(f' eigen_values: {self.eigen_central}')
+        print(f'Degree Centrality: {nx.degree_centrality(self.G)}')
         return self.G
 
     def load_agent_docs(self):
@@ -151,9 +154,12 @@ class Pack:
 
         print('upload successful :)')
 
-    def one_question(self, prompt: str):
+    def one_question(self, prompt: str, neuron_representation: bool = False):
         '''
         one question for pack
+        neuron_representation (bool): Default False
+        creates transducer for abstraction of agent responses in 
+        Neural Network
         '''
         res = defaultdict()
         for agent in self.agents:
@@ -161,6 +167,11 @@ class Pack:
             # time.sleep(60)
         logging.info(res)
         # logging.debug(res)
+        if neuron_representation:
+            self.transducer = Transducer(self.agents)
+            self.transducer.create_layer()
+            demo_vector = self.transducer.neurons['agent_snd_m2']
+            print(f'Neural Parameters: {demo_vector.neural_params}')
         return res
 
     def chat(self):
@@ -193,6 +204,32 @@ class Pack:
         '''
         self.snd = nx.diameter(self.G)
         return self.snd
+
+    def graph_neuron_representatation(self):
+        '''
+        graphs the representation of the state of agents
+        based on a user's prompt and the Pack responses
+        '''
+        if not self.transducer:
+            print('first init the transducer layer')
+        input_layer = self.transducer
+        points = []
+
+        for name, agent in input_layer.neurons.items():
+            points.append([agent.x, agent.y, agent.z])
+
+        # Unpacking the x, y, z coordinates
+        x = [item[0] for item in points]
+        y = [item[1][1] for item in points]
+        z = [item[2] for item in points]
+
+        # Creating a 3D plot
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+
+        # Plotting the dots
+        ax.scatter(x, y, z)
+        plt.show()
 
 
 if __name__ == '__main__':
