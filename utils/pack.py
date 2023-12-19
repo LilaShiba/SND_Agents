@@ -56,7 +56,7 @@ class Pack:
         # Create or load embeddings
         self.load_agent_docs()
         self.metrics = ThoughtDiversity(self)
-        self.transducer: Transducer = None
+        self.transducer = Transducer(self.agents)
 
     def update_weighted_edges(self, question: str, k: int = 0) -> dict:
         '''
@@ -165,13 +165,14 @@ class Pack:
         for agent in self.agents:
             res[agent.name] = agent.chat_bot.one_question(prompt)
             # time.sleep(60)
+        res['prompt'] = prompt
         logging.info(res)
         # logging.debug(res)
         if neuron_representation:
-            self.transducer = Transducer(self.agents)
+            self.transducer = Transducer(self.agents, prompt)
             self.transducer.create_layer()
-            demo_vector = self.transducer.neurons['agent_snd_m2']
-            print(f'Neural Parameters: {demo_vector.neural_params}')
+            # demo_vector = self.transducer.neurons['agent_snd_m2']
+            # print(f'Neural Parameters: {demo_vector.neural_params}')
         return res
 
     def chat(self):

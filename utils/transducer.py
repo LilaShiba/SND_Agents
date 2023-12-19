@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from typing import *
 from utils.agent import Agent
-from utils.nets import Neuron
+from utils.neuron import Neuron
 from collections import defaultdict, Counter
 
 
@@ -25,7 +25,7 @@ class Transducer:
         self.jaccard_indices = defaultdict(float)
         self.prob_vectors = defaultdict(list)
         self.all_words_count = defaultdict(int)
-        self.all_responses: str = ""
+        self.all_responses: str = question
         self.n: int
         self.neurons = defaultdict()
         # set values
@@ -45,7 +45,8 @@ class Transducer:
         self.all_words_prob = self._get_prob_vect(self.all_responses)
         self.prob_vectors = {agent.name: [
             self._get_prob_vect(agent.response)] for agent in agents}
-
+        # add prompt to prob_vect
+        self.prob_vectors['prompt'] = self._get_prob_vect(question)
         # self.bounded_space()
 
     def bounded_space(self) -> None:
