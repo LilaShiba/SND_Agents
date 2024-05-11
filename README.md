@@ -1,6 +1,7 @@
 # 🦄 About This Framework
 
 ## <a href="https://github.com/LilaShiba/SND_Agents/blob/main/d_g-wolves-read.pdf"> ✨ Inspiration  ✨ </a>
+## <a href="https://github.com/LilaShiba/SND_Agents/blob/main/Lila%20Jame%20Final%20Paper.pdf"> ✨ Contribution  ✨ </a>
 
 This AI Entity Framework is a cutting-edge system designed for crafting intelligent agent(s). These agent(s) are not just typical AI entities; they are foundational, adaptable, and capable of underpinning a wide array of applications. 🌟 This framework aspires to maximize the benefits of <a href="https://arxiv.org/abs/2108.07258">foundational models while minimizing potential harms</a>.
 
