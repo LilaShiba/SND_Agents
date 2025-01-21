@@ -13,9 +13,9 @@ Where probablities are calculated from <code> vector = {P(Word|All_Response) for
   
 <center><img src='images/output.png' width='500' height='auto' ></center>
 
-### Objective for M3
+### Neuron 
 
-🧠🌌 Create a bounded high diminsional plane of semantic understanding of agent answers using the Neuron class.  Mimicing the theory behind <a href="https://arxiv.org/abs/2004.04906">this paper</a> the scope of the bounded space would be 500 words max.
+🧠🌌  Mimicing the theory behind <a href="https://arxiv.org/abs/2004.04906">this paper</a> the scope of the bounded space would be 500 words max.
 
 Neuron Architecture to create vector embeddings
 
